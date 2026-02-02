@@ -8,9 +8,81 @@
 
 \typeout{NT FILE chapter4.tex}%
 
-\chapter{Abordagem e Processo de Desenvolvimento}
-\label{chap:abordagem}
+\chapter{Arquitetura do Sistema e Implementação}
+\label{cha:arquitetura_implementacao}
 
-Este capítulo descreve a abordagem seguida na segunda fase da dissertação, centrada na materialização do \textit{Dashboard Designer} como uma ferramenta funcional e utilizável. Pretende-se contextualizar a forma como o problema foi endereçado do ponto de vista prático, explicando a estratégia adotada para planear e conduzir o desenvolvimento, bem como as decisões que orientaram a implementação ao longo do tempo.
+\section{Introdução}
+\label{sec:cap4_introducao}
 
-Numa primeira parte, apresenta-se a abordagem ao problema e o planeamento da implementação, explicitando como foram definidas prioridades, marcos e critérios de sucesso. De seguida, descreve-se o processo de desenvolvimento, com ênfase numa metodologia iterativa e incremental, onde o sistema foi evoluindo por ciclos sucessivos de implementação e validação. Por fim, identificam-se funcionalidades não implementadas e limitações, discutindo-se as razões para a sua exclusão e estabelecendo-se a ponte para o capítulo seguinte, onde é detalhada a implementação e arquitetura da ferramenta.
+Este capítulo descreve, de forma detalhada, a arquitetura do sistema e as principais decisões de implementação do \textit{Dashboard Designer}. O objetivo é documentar o funcionamento real da aplicação desenvolvida, justificando as opções técnicas adotadas e explicando como cada funcionalidade contribui para suportar o processo de prototipagem, documentação e revisão de \textit{dashboards} interativos.
+
+A aplicação encontra-se disponível publicamente como uma plataforma \textit{web}, permitindo a sua utilização direta através do \textit{browser}\footnote{\url{https://bbrito02.github.io/Dashboard-Designer/}}. Adicionalmente, o código-fonte e o histórico de desenvolvimento estão disponíveis no repositório do projeto\footnote{\url{https://github.com/BBrito02/Dashboard-Designer}}. Esta disponibilização facilita a validação das decisões descritas ao longo do capítulo.
+
+A organização do capítulo segue uma progressão do geral para o específico, procurando primeiro estabelecer uma visão arquitetural do sistema e, de seguida, detalhar o funcionamento das suas funcionalidades principais. Em primeiro lugar, apresenta-se a arquitetura global do \textit{Dashboard Designer}, descrevendo a organização do projeto, os principais módulos e a forma como estes se articulam para suportar o editor, incluindo os mecanismos adotados para persistência e portabilidade de projetos. De seguida, descreve-se o \textit{Modo de Edição} (\textit{Editor Mode}), que corresponde ao núcleo de prototipagem da ferramenta, detalhando o \textit{canvas} interativo, a criação e manipulação dos diferentes tipos de nós e ligações, e o processo de configuração da informação associada a cada componente, garantindo consistência com o meta-modelo definido anteriormente. Por fim, analisa-se o \textit{Modo de Revisão} (\textit{Review Mode}), que introduz um fluxo dedicado à análise e recolha de \textit{feedback} diretamente sobre elementos concretos do protótipo (nós e ligações), promovendo um processo de iteração mais controlado e uma comunicação contextualizada dentro da própria aplicação.
+
+\section{Arquitetura do Sistema}
+\label{sec:cap4_arquitetura}
+
+A arquitetura do \textit{Dashboard Designer} foi concebida para suportar um editor visual baseado em nós e ligações, assegurando uma utilização fluida no navegador e uma implementação fácil de manter e evoluir. Para isso, o sistema encontra-se organizado em componentes com responsabilidades bem definidas, o que facilita a extensão de funcionalidades e a correção de problemas de forma controlada. Adicionalmente, a ferramenta inclui mecanismos que permitem guardar e reutilizar projetos, bem como transportá-los entre diferentes contextos de utilização, suportando um processo iterativo de prototipagem e revisão.
+
+De forma simplificada, o \textit{Dashboard Designer} pode ser entendido em três blocos principais, ilustrados na Figura~\ref{fig:cap4_arquitetura_blocos}. O artefacto central da aplicação é um protótipo representado como um grafo, composto por nós e ligações, ao qual estão associados propriedades e metadados descritivos sobre cada componente do \textit{dashboard}. A \textbf{Interface} é responsável pela interação com o utilizador e pela representação visual deste grafo, permitindo criar e manipular elementos de forma interativa. O bloco de \textbf{Domínio} concentra o modelo de dados e as regras que estruturam as relações entre elementos, assegurando consistência e coerência semântica ao longo do processo de edição. Por fim, a camada de \textbf{Persistência e I/O} suporta operações como guardar, restaurar e transportar projetos, incluindo a gestão de recursos associados, de modo a permitir reutilização entre sessões e partilha através de mecanismos de importação/exportação. Esta separação por responsabilidades facilita a manutenção e evolução da ferramenta, mantendo as regras do modelo independentes da camada visual e permitindo introduzir novas funcionalidades de forma controlada.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\textwidth]{arquitetura_3_blocos}
+  \caption{Visão simplificada da arquitetura do \textit{Dashboard Designer} em três blocos.}
+  \label{fig:cap4_arquitetura_blocos}
+\end{figure}
+
+A decisão de implementar o \textit{Dashboard Designer} como uma \gls{SPA} executada no lado do cliente permite disponibilizar a ferramenta diretamente no navegador, simplificando o acesso e suportando uma interação contínua no ambiente de edição e revisão. Nesta abordagem, a camada de interface trata da renderização e manipulação dos nós e arestas e da apresentação de painéis e janelas auxiliares; a camada de domínio consolida o modelo de dados e as regras de coerência; e a camada de persistência assegura que um projeto pode ser exportado/importado para partilha entre utilizadores. Esta distinção evita que decisões semânticas e regras de consistência fiquem dispersas pela interface, e facilita a evolução da ferramenta no caso de ser necessário introduzir novos tipos de nós, novas regras ou novos mecanismos de armazenamento.
+
+A aplicação está organizada por módulos, desta forma, separamos as responsabilidades da aplicação e facilitamos a sua manutenção. O componente \texttt{Editor.tsx} funciona como o componente principal do editor, integrando o \textit{canvas} principal da aplicação, mantendo o estado do protótipo (nós e arestas), e coordenando as principais ações do ambiente de edição e revisão. A renderização dos elementos no \textit{canvas} é isolada em módulos próprios, nomeadamente em \texttt{src/canvas/nodes} (nós personalizados) e \texttt{src/canvas/edges} (arestas personalizadas), permitindo que cada tipo de elemento tenha uma implementação visual consistente, mas independente do restante \textit{layout} da aplicação. A edição de propriedades e a configuração dos elementos do protótipo é suportada por componentes de interface organizados em \texttt{src/components/menus} e \texttt{src/components/popups}, onde se concentram painéis laterais, janelas modais e outros mecanismos de interação auxiliar. Em paralelo, comportamentos adicionais como \textit{undo/redo}, atalhos de teclado e restrições de layout, são encapsulados em \texttt{src/hooks}, o que permite manter a lógica reutilizável separada dos componentes visuais. A camada \texttt{src/domain} agrega definições estruturais (tipos e \textit{schemas}), regras e utilitários que materializam a semântica do sistema, enquanto \texttt{src/utils} concentra operações de persistência local e importação/exportação de projetos.
+
+O protótipo de um \textit{dashboard} desenvolvido no \textit{Dashboard Designer} é representado internamente como um grafo: os \textbf{nós} modelam os diferentes elementos do \textit{dashboard}, e as \textbf{arestas} representam relações entre esses elementos. Esta representação é alinhada com o meta-modelo descrito na secção~\ref{sec:meta_modelo}, na medida em que cada tipo de nó transporta propriedades específicas (metadados) e as ligações entre nós são restringidas por regras semânticas, de forma a manter coerência conceptual. Cada nó inclui um objeto \texttt{NodeData} que agrega a informação relevante para o domínio, nomeadamente identificadores, propriedades, configurações e metadados associados ao elemento representado. As arestas, por sua vez, incluem informações adicionais que permitem distinguir relações com significado diferente, como é o caso das ligações associadas a interações e ligações associadas a \textit{tooltips}.
+
+A estrutura do protótipo é descrita pelo conjunto de nós e ligações, complementado por informações de contexto necessário ao processo de edição, como o elemento selecionado e a sua área visível no \textit{canvas}. Sempre que o utilizador realiza uma ação no editor (por exemplo, criar, mover ou editar um elemento), essa informação é atualizada e a interface reflete automaticamente as alterações, tanto no \textit{canvas} como nos painéis de configuração. Para tornar o processo de edição e revisão mais prático e consistente, a ferramenta inclui ainda funcionalidades de apoio, como \textit{undo/redo}, atalhos de teclado e regras de organização do \textit{layout}, que ajudam a manter uma utilização fluida e consistente.
+
+Um requisito fundamental do \textit{Dashboard Designer} é permitir que os projetos desenvolvidos sejam preservados e partilhados entre diferentes utilizadores. Para esse efeito, o sistema separa claramente \textbf{dados estruturais} (grafo e metadados) de \textbf{recursos pesados} (imagens associadas a \textit{screenshots}). A informação estrutural do projeto, nomeadamente a configuração do \textit{canvas} e a definição dos nós e das arestas, é guardada num formato JSON. Já as imagens associadas aos \textit{dashboards} são armazenadas localmente no navegador através do \textit{IndexedDB}, permitindo gerir estes recursos de forma eficiente sem sobrecarregar a informação principal do projeto. Esta decisão melhora a responsividade do editor e simplifica o ciclo de edição e revisão, especialmente quando o utilizador manipula múltiplos elementos com suporte visual.
+
+De forma a permitir que os protótipos possam ser partilhados e reutilizados, o \textit{Dashboard Designer} utiliza um formato próprio de ficheiro com a extensão \texttt{.dashboard}. Este ficheiro reúne, num único elemento, toda a informação necessária para voltar a abrir um protótipo: a estrutura do grafo (nós e arestas), alguns parâmetros do editor (a área visível no \textit{canvas}) e as referências aos recursos associados, como imagens. Quando o utilizador exporta um projeto, a aplicação cria este ficheiro com a estrutura e os recursos necessários; quando importa um projeto, o processo é inverso, reconstruindo o grafo e restaurando os recursos para que o protótipo possa ser visualizado e editado novamente. Esta abordagem facilita a partilha de protótipos entre utilizadores e permite preservar o trabalho desenvolvido sem depender de servidores de \textit{backend} externos.
+
+Com a arquitetura do sistema definida, as secções seguintes descrevem as funcionalidades da aplicação em detalhe. A Secção~\ref{sec:cap4_editor_mode} aprofunda o \textit{Modo de Edição}, descrevendo o ambiente de edição, criação/manipulação de nós e o processo de configuração semântica do protótipo. A Secção~\ref{sec:cap4_review_mode} descreve o \textit{Modo de Recolha de Feedback}, dedicado à análise e recolha de \textit{feedback} contextualizado diretamente sobre elementos do \textit{dashboard}, suportando iteração e colaboração dentro da própria ferramenta.
+
+\section{Modo de Edição}
+\label{sec:cap4_editor_mode}
+
+\subsection{Ambiente de Edição e Canvas}
+\label{subsec:cap4_editor_canvas}
+% (texto a desenvolver)
+
+\subsection{Criação e Manipulação de Nós}
+\label{subsec:cap4_editor_nos}
+% (texto a desenvolver)
+%aqui pode ser so falar sobre como creio os nos e como e que os manipulo a nível visual e de propriedades
+
+\subsection{Edição de Propriedades e Estrutura Semântica}
+\label{subsec:cap4_editor_propriedades}
+% (texto a desenvolver)
+
+\subsection{Interações e Tooltips}
+\label{subsec:cap4_editor_interacoes_tooltips}
+% aqui incluis: criação de ligações, dependências, validações, e lógica das tooltips/interações
+
+\section{Modo de Recolha de Feedback}
+\label{sec:cap4_review_mode}
+
+\subsection{Conceito e Objetivo}
+\label{subsec:cap4_review_conceito}
+% (texto a desenvolver)
+
+\subsection{Bloqueio de Edição e Mudança de Comportamento}
+\label{subsec:cap4_review_bloqueio}
+% (texto a desenvolver)
+
+\subsection{Recolha de Feedback}
+\label{subsec:cap4_review_integracao}
+% (texto a desenvolver)
+
+\section{Síntese do Capítulo}
+\label{sec:cap4_sintese}
+% (texto a desenvolver)

@@ -3,41 +3,88 @@
 %% chapter3.tex
 %% NOVA thesis document file
 %%
-%% Chapter with a short latex tutorial and examples
+%% Capítulo 3 (revisto após feedback dos orientadores)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \typeout{NT FILE chapter3.tex}%
 
-\chapter{Dashboard Designer}
-\label{cha:dashboard_designer}
+\chapter{Abordagem Dashboard Designer}
+\label{cha:dashboard_designer_abordagem}
 
-As ferramentas existentes para a análise e desenho de \textit{dashboards} apresentam muitas limitações no que toca ao suporte de um processo iterativo de design, à exploração de alternativas e à recolha de \textit{feedback} por parte dos seus utilizadores. De forma a colmatar esta lacuna, este capítulo apresenta uma proposta inicial para o desenvolvimento de uma solução baseada na linguagem \gls{IVML}, criada para apoiar todo o processo de criação, prototipagem e documentação de \textit{dashboards} interativos.
+As ferramentas existentes para a análise e desenho de \textit{dashboards} apresentam limitações no que toca ao suporte no processo de desenvolvimento iterativo de design, à exploração de alternativas e à recolha de \textit{feedback} de forma contextualizada. No âmbito desta dissertação, pretende-se desenvolver o \textit{Dashboard Designer}, uma ferramenta web que suporta a prototipagem e documentação de \textit{dashboards} interativos com base na linguagem \gls{IVML}.
 
-Neste capítulo será apresentada a abordagem adotada para o desenvolvimento da ferramenta proposta, destacando as suas características principais. Seguidamente, é introduzido o meta-modelo desenvolvido, que abrangem tanto a especificação da linguagem \gls{IVML} como toda a metodologia de suporte para a criação de \textit{dashboards}. O meta-modelo foi elaborado em inglês, de forma a facilitar a partilha, e a possível integração futura com outras ferramentas e projetos internacionais. Por fim, são apresentados os protótipos desenvolvidos numa fase inicial de implementação da ferramenta.
+Este capítulo descreve a forma como o problema é abordado e como o desenvolvimento da ferramenta é planeado e estruturado. Em primeiro lugar, é apresentada a abordagem global adotada, destacando opções arquiteturais e os princípios funcionais da ferramenta ao nível conceptual. De seguida, é descrito o processo de desenvolvimento, incluindo a organização do trabalho em etapas, mecanismos de validação com os orientadores e uma síntese das funcionalidades implementadas. Posteriormente, é apresentado o meta-modelo que fundamenta a ferramenta. Por fim, são descritas as tecnologias e ferramentas selecionadas para suportar a implementação.
 
-%Neste capítulo iram ser apresentados os meta-modelos desenvolvidos. Estes meta-modelos abrangem não só a especificação da linguagem \gls{IVML} como toda a metodologia de suporte para a criação de \textit{dashboards}. Os meta-modelos foram desenvolvidos em inglês, facilitando a compreensão, a partilha, e a possível integração futura com outras ferramentas e projetos internacionais. Ainda neste capítulo, iram ser mencionados os protótipos iniciais desenvolvidos, terminando pela listagem de requisitos e tecnologias que a solução necessita de ter presente.
+\section{Abordagem}
+\label{sec:cap3_abordagem}
 
-\section{Abordagem} % (fold)
-\label{sec:dashboard_abordagem}
+A abordagem adotada para o desenvolvimento do \textit{Dashboard Designer} é orientada para suportar um processo iterativo de prototipagem, onde diferentes intervenientes (por exemplo, \textit{designers}, e utilizadores finais) conseguem construir, analisar e refinar \textit{dashboards} de forma progressiva. Para isso, a solução é desenhada para representar componentes e relações de forma visual e explícita, reduzindo ambiguidades na comunicação e preservando o contexto associado a cada decisão de design.
 
-Num primeiro plano, será feita uma adoção crítica da linguagem \gls{IVML}. A linguagem fornece uma base bastante consolidada para representar visualmente todos os elementos envolvidos no design de \textit{dashboards}, as suas interações, conjuntos de dados, e componentes de navegação. Neste sentido, foi desenvolvido um meta-modelo que combina os princípios centrais da linguagem \gls{IVML} com a adição de uma componente analítica destinada a documentar os objetivos e propósitos que suportam a criação de cada \textit{dashboard}.
+Do ponto de vista arquitetural, a ferramenta é concebida como uma \gls{SPA}, executada no navegador, privilegiando uma experiência de utilização fluída e responsiva. Esta opção permite reduzir fricção de acesso (sem instalação dedicada) e simplificar a distribuição da ferramenta. Adicionalmente, a solução é planeada para funcionar sem dependência de um \textit{backend} dedicado, centrando-se numa abordagem \textit{client-side} para armazenamento e portabilidade dos projetos, o que facilita a utilização em diferentes contextos e ambientes.
 
-Relativamente ao processo de desenvolvimento, este será conduzido de forma incremental através da realização de \textit{sprints} semanais que, com o passar do tempo, irão resultar em diversas versões parciais da ferramenta. Esta abordagem irá permitir a realização de testes intermédios e recolher \textit{feedback} de forma contínua.
+A aplicação é estruturada em dois modos principais de utilização:
+\begin{itemize}
+  \item \textbf{Editor Mode}: destinado à criação e edição de protótipos, permitindo ao utilizador construir a estrutura do \textit{dashboard} através de nós e ligações, e configurar propriedades relevantes para cada componente.
+  \item \textbf{Review Mode}: orientado para análise e recolha de \textit{feedback}, com foco na inspeção do protótipo e na comunicação contextualizada sobre elementos concretos (nós e ligações).
+\end{itemize}
 
-Para a implementação da ferramenta, vão ser utilizadas tecnologias como: \textit{TypeScript}~\cite{typescript} e \textit{React}~\cite{react} para o desenvolvimento da interface da ferramenta. \textit{React} foi escolhido como \textit{framework} principal pela sua modularidade, reatividade e compatibilidade com uma grande diversidade de bibliotecas bastante úteis para o contexto deste projeto, destacando-se a biblioteca \textit{React Flow}~\cite{reactflow}, que será utilizada na representação gráfica das diferentes componentes \gls{IVML}. Adicionalmente, será utilizada a biblioteca \textit{dnd-kit}~\cite{dndkit}, uma biblioteca bastante utilizada para implementar funcionalidades de \textit{drag-and-drop}. A personalização das diferentes componentes visuais será feita com \textit{TailwindCSS}~\cite{tailwindcss}, um \textit{framework} que facilita a construção de interfaces responsivas.
+Ao nível conceptual, a ferramenta é planeada para suportar funcionalidades essenciais para a prototipagem e documentação de \textit{dashboards}, incluindo: uma abordagem visual baseada em grafo (nós/arestas), mecanismos de \textit{drag-and-drop} para criação rápida de protótipos, integração de \textit{screenshots} e elementos visuais, validação de dependências entre componentes, e suporte à recolha de \textit{feedback} diretamente sobre os elementos representados.
 
-O objetivo principal da criação de uma ferramenta no contexto da dissertação, é auxiliar o processo de conceção e design de \textit{dashboards}, facilitando o processo iterativo de comunicação entre todos os seus utilizadores. De forma a tornar esta ferramenta orientada para as funcionalidades que tem de realizar, existem algumas características que se tornam importantes de serem implementadas. Estas característica são:
+\section{Processo de Desenvolvimento}
+\label{sec:cap3_plano_desenvolvimento}
+
+O desenvolvimento do \textit{Dashboard Designer} é conduzido de forma incremental, através de iterações regulares que permitem validar decisões e ajustar a implementação de forma progressiva. Esta abordagem favorece a identificação precoce de problemas de usabilidade e consistência conceptual, e facilita a integração de melhorias ao longo do tempo.
+
+Ao longo do desenvolvimento são realizados \gls{PDS} semanais com os orientadores. Nestes encontros é apresentado o progresso realizado na semana, as principais dificuldades encontradas e o plano de trabalho proposto para a semana seguinte. Este modelo de acompanhamento promove uma validação contínua das decisões tomadas e assegura alinhamento com os objetivos definidos para a dissertação.
+
+A Tabela~\ref{tab:cap3_plano_fases} resume as etapas consideradas no planeamento do desenvolvimento, clarificando objetivos e entregáveis por fase.
+
+\begin{table}[htbp]
+\centering
+\caption{Síntese do plano de desenvolvimento do \textit{Dashboard Designer}.}
+\label{tab:cap3_plano_fases}
+\begin{tabular}{p{0.16\textwidth} p{0.38\textwidth} p{0.38\textwidth}}
+\hline
+\textbf{Etapa} & \textbf{Objetivo} & \textbf{Resultados previstos} \\
+\hline
+Levantamento de requisitos
+& Consolidar necessidades funcionais e requisitos de usabilidade para a ferramenta.
+& Lista estruturada de requisitos (funcionais e não-funcionais) que guiam o desenvolvimento, bem como as funcionalidades implementadas. \\
+\hline
+Meta-modelo e protótipos
+& Definir a estrutura conceptual do domínio e desenhar protótipos que orientam a interface.
+& Meta-modelo (Sec.~\ref{sec:meta_modelo}) e protótipos iniciais para validação visual e estrutural. \\
+\hline
+Implementação visual
+& Construir a base visual do editor (canvas, nós, menus) alinhada com os protótipos.
+& Interface funcional do Editor Mode ao nível visual (canvas e representação dos nós). \\
+\hline
+Implementação lógica
+& Transferir regras do meta-modelo para a ferramenta (atributos, ligações, dependências e validações).
+& Estrutura semântica operacional (dados por nó, regras de ligação e coerência do grafo). \\
+\hline
+Funcionalidades diferenciadoras
+& Implementar capacidades que suportam iteração e colaboração.
+& Review Mode para recolha de feedback e suporte a alternativas/perspetivas nos nós. \\
+\hline
+Validação e testes
+& Verificar consistência, robustez e adequação do comportamento esperado.
+& Testes manuais e validações contínuas através da criação de protótipos representativos. \\
+\hline
+\end{tabular}
+\end{table}
+
+A fase inicial de levantamento de requisitos permitiu consolidar as funcionalidades que a ferramenta deve suportar, assegurando que o desenvolvimento permanece alinhado com o objetivo central da dissertação: apoiar a conceção, prototipagem e revisão de \textit{dashboards} interativos. De seguida, apresentam-se os requisitos funcionais do \textit{Dashboard Designer}, cujo detalhe de funcionamento é aprofundado no Capítulo~\ref{cha:arquitetura_implementacao}.
 
 \begin{itemize}
-  \item Implementação de uma abordagem drag-and-drop.
-  \item Integração de \textit{screenshots} reais para dar suporte aos elementos visuais.
-  \item Capacidade de desenvolver várias opções de layout do dashboard.
-  \item Implementação de atalhos como \textit{copy-paste}.
-  \item Suporte para diferentes perfis de utilizador.
-  \item Capacidade de representar os elementos segundo o meta-modelo apresentado em~\ref{app:meta_modelo_app}.
-  \item Capacidade de oferecer uma visão detalhada sobre cada elemento utilizado (tipo de visualização, dados utilizados, objetivos de visualização).
-  \item Capacidade de simular o comportamento do \textit{dashboard}.
-  \item Capacidade de recolher \textit{feedback} por parte dos seus utilizadores ao analisar os \textit{dashboards} criados.
+  \item \textbf{Abordagem \textit{drag-and-drop}} para criação e reorganização rápida de componentes no \textit{canvas}.
+  \item \textbf{Integração de \textit{screenshots}} como suporte visual à representação do \textit{dashboard}, facilitando comunicação e validação de layout.
+  \item \textbf{Alternativas de layout do \textit{dashboard}}, permitindo explorar e comparar diferentes variações do protótipo.
+  \item \textbf{Atalhos de produtividade (\textit{undo/redo})}, reduzindo fricção durante a edição e experimentação de alternativas.
+  \item \textbf{Suporte a diferentes perfis de utilizador}, adaptando o fluxo de utilização a intervenientes com objetivos distintos.
+  \item \textbf{Representação alinhada com o meta-modelo}, assegurando consistência conceptual entre elementos e relações.
+  \item \textbf{Visão detalhada por elemento}, disponibilizando informação estruturada sobre cada componente (por exemplo, tipo de visualização, dados e objetivos).
+  \item \textbf{Recolha de \textit{feedback} integrada}, permitindo comentários contextualizados durante a análise de protótipos.
 \end{itemize}
 
 \section{Meta-modelo} % (fold)
@@ -58,7 +105,6 @@ A componente analítica tem como principal objetivo representar o processo inici
 
 A segunda componente representada no diagrama é a componente estrutural, cujo principal objetivo é representar os diferentes elementos visuais e interativos que vão ser utilizados na representação dos diferentes \textit{dashboards} a desenvolver. A entidade que desempenha um papel central nesta componente é a \textbf{Dashboard}, responsável por agregar todos os elementos que compõem a interface visual. Cada \textit{dashboard} pode integrar múltiplas entidades \textbf{Visualization}, que correspondem às representações gráficas dos dados a serem analisados (como gráficos, mapas ou tabelas). Uma visualização pode estar associada a zero o mais entidades \textbf{Caption}, que representam a legenda da informação que está a ser mostrada nas diferentes visualizações. Cada visualização pode estar associada a zero ou mais entidades \textbf{Tooltip}, estas entidades fornecem informação adicional ao utilizador sobre um ou mais elementos presentes na visualização. A entidade \textbf{Placeholder} pode estar associada tanto à visualização como ao próprio \textit{dashboard}, e serve para representar componentes estáticas como imagens ou títulos. Esta entidade contribui para estruturar o \textit{display} da interface, sem sobrecarregar o utilizador com informação analítica. Por fim, é introduzida a entidade \textbf{InteractionComp}, uma classe abstrata que agrega diferentes tipos de componentes interativos, com comportamentos distintos. A primeira entidade é \textbf{Button}. Esta entidade é utilizada para ilustrar botões acionáveis responsáveis por executar ações específicas. A segunda entidade é \textbf{Parameter}, usada quando se pretende introduzir parâmetros que influenciam diretamente o conteúdo a ser mostrado. Finalmente, é introduzida a entidade \textbf{Filter}, destinada à representação de filtros aplicáveis a uma ou mais visualizações, permitindo refinar os dados exibidos conforme os critérios definidos pelo utilizador.
 
-%aqui não esquecer de citar a tese da ana mais uma vez e referenciar a utilização de exemplos para facilitar a análise do diagrama
 Como é possível observar na Figura~\ref{fig:comp_anal_struct}, são estabelecidas ligações diretas de dependência e agregação entre entidades da componente estrutural e entidades da componente analítica, sendo esta a razão pela qual estas componentes são apresentadas de forma simultânea e não de forma separada. Estas ligações entre componentes descrevem o comportamento e relação funcional que estas componentes têm em comum. Um exemplo destas ligações é a relação entre a entidade \textbf{Analysis Perspective} e a entidade \textbf{Dashboard}. Como é descrito anteriormente, cada tema de análise pode englobar uma ou mais perspetivas de análise, sendo que estas perspetivas de análise são representadas visualmente através da criação de diferentes tipos de \textit{dashboard}. Da mesma forma, a entidade \textbf{Analysis Objective} está diretamente ligada à entidade \textbf{Visualization}. Cada perspetiva de análise pode agregar um ou mais objetivos de análise, sendo que estes objetivos são respondidos através da criação de diferentes tipos de visualização. Estas ligações entre entidades são a ponte que estabelece a ligação entre a componente analítica e estrutural, dando contexto às diferentes componentes visuais implementadas nas representações.
 
 \begin{figure}[htbp]
@@ -117,48 +163,51 @@ De forma semelhante à componente de interação, a componente de navegação es
   \label{fig:navigation}
 \end{figure}
 
-\section{Protótipo Preliminar Desenvolvido} % (fold)
-\label{sec:prototipo_preliminar}
+\section{Tecnologias e Ferramentas}
+\label{sec:cap3_tecnologias}
 
-%Ver melhor o titulo mas aqui é onde vou falar sobre os prototipos feitos numa fase inicial onde a ferramenta apenas se ia centrar no IVML
-%introdução, dizer que meti em anexo o protótipo, dizer que foi numa fase inicial
-Para o desenvolvimento de qualquer ferramenta, é crucial que sejam implementados protótipos representativos, quer para representar as diferentes componentes visuais que a mesma terá, quer para representar as componentes técnicas.
+Para suportar a implementação do \textit{Dashboard Designer}, são selecionadas tecnologias e bibliotecas com foco em: desenvolvimento rápido, modularidade, suporte a interfaces interativas complexas e capacidade de persistência e portabilidade de projetos. A seleção tecnológica procura equilibrar três dimensões essenciais: (i) \textbf{produtividade} durante o desenvolvimento, (ii) \textbf{robustez} e facilidade de manutenção do código, e (iii) \textbf{adequação ao domínio} de um editor visual baseado em nós e ligações.
 
-Numa fase inicial do desenvolvimento da dissertação, foi implementado um protótipo da ferramenta em Figma~\cite{figma} baseada na linguagem \gls{IVML}. Este protótipo tinha como principal objetivo representar todas as componentes visuais e técnicas que a solução final iria possuir. Uma vez que este protótipo foi realizado numa fase inicial, o mesmo já não se encontra de acordo com a estrutura e organização do meta-modelo desenvolvido e mencionado na secção~\ref{sec:meta_modelo}. O protótipo desenvolvido é apresentado no apêndice~\ref{app:prototipo_inicial}. Como é possível observar, o mesmo apenas representa as diferentes componentes que a linguagem \gls{IVML} possuiu, ignorando toda a componente analítica que é necessária para a criação de diferentes \textit{dashboards} interativas.
+Nas subsecções seguintes, apresentam-se as tecnologias selecionadas, agrupadas entre tecnologias base de desenvolvimento e bibliotecas mais específicas para suportar funcionalidades críticas do domínio, como \textit{drag-and-drop}, persistência local e exportação/importação de projetos.
 
-\section{Metodologia de Avaliação} % (fold) ou Plano de avaliação
-\label{sec:metodologia_avaliacao}
+\subsection{Tecnologias Base}
+\label{subsec:cap3_tecnologias_base}
 
-O processo de avaliação da ferramenta tem como principal objetivo avaliar métricas como a usabilidade, eficácia de utilização, e o nível de esforço necessário para a realização das tarefas propostas. Esta avaliação será feita através da realização de dois tipos de tarefas, com diferentes propósitos e tipos de utilizador.
+As tecnologias base foram escolhidas para garantir uma fundação sólida para o desenvolvimento de uma aplicação web moderna, com uma interface altamente interativa e facilmente extensível. Em particular, a combinação de \textit{React} e \textit{TypeScript} permite construir uma interface modular e reativa, enquanto assegura maior segurança e consistência na gestão de estruturas de dados complexas (por exemplo, diferentes tipos de nós, propriedades e configurações). Em paralelo, ferramentas como o \textit{Vite} e o \textit{Tailwind CSS} facilitam um ciclo de desenvolvimento rápido e uma construção eficiente de interfaces, aspetos importantes num processo iterativo e orientado à prototipagem.
 
-A primeira tarefa a ser avaliada é realizada por um perfil de utilizador mais técnico, com uma vasta experiência e conhecimento na área de visualização de dados, nomeadamente \textit{developers} e \textit{designers}. Será pedido que este tipo de utilizadores, através da utilização do Dashboard Designer, construam protótipos de \textit{dashboards} interativos já desenvolvidos e implementados pelos próprios. O principal objetivo deste tipo de tarefa é avaliar o nível de eficácia e facilidade com que o utilizador consegue implementar a tarefa pedida. Este tipo de tarefa não pretende avaliar atributos como a quantidade de esforço para realizar a tarefa pedida, mas sim avaliar a facilidade e eficácia com que o utilizador consegue implementar a tarefa proposta.
-
-A segunda tarefa a ser avaliada é realizada por um perfil de utilizadores com conhecimentos básicos na área de visualização de dados. Nesta tarefa, será solicitado aos utilizadores para interagirem com diferentes versões de protótipos de diferentes \textit{dashboards} já implementados previamente. O objetivo desta tarefa é avaliar o \textit{feedback} que os utilizadores conseguem dar consoante as funcionalidades propostas, e avaliar a facilidade com que os utilizadores conseguem interagir com a mesma. Nesta tarefa, serão avaliadas métricas como \textit{precision} e a \textit{recall}, com o objetivo de analisar a eficácia e abrangência com que os utilizadores conseguem completar corretamente os objetivos propostos.
-
-Para além das avaliações na realização das tarefas como, o tempo necessário para a sua realização, o número de iterações necessárias, e a taxa de sucesso na realização das tarefas, também será feita uma avaliação através da realização de questionários como o \textit{System Usability Scale} (SUS)~\cite{brooke1996sus} para avaliar o nível de usabilidade da ferramenta, e o \textit{NASA-TLX}~\cite{hart1988development} para avaliar o nível de esforço necessário para a realização das tarefas propostas.
-
-Desta forma, através desta metodologia de avaliação, é possível obter uma visão equilibrada sobre o desempenho e usabilidade da ferramenta., através da avaliação funcional por utilizadores experientes na área, e através da avaliação da sua eficácia como meio de comunicação visual e de recolha de \textit{feedback} por utilizadores menos técnicos.
-
-\begin{comment}
-
-\section{Requisitos da ferramenta} % (fold)
-\label{sec:requisitos}
-
-%Tecnologias e requisitos que eu já sei que a ferramenta terá de ter
-Para tornar a ferramenta orientada às necessidades dos seus utilizadores, é necessário ter em consideração certas tecnologias para tornar esta experiência o mais orientada para o seu público-alvo. O objetivo principal da criação de uma ferramenta no contexto da dissertação, é auxiliar o processo de conceção e design de \textit{dashboards}, facilitando o processo iterativo de comunicação entre todos os seus utilizadores.
-
-De forma a tornar esta ferramenta orientada para as funcionalidades que tem de realizar, existem algumas características que se tornam imperativas de serem implementadas. Estas característica são:
+De forma geral, estas tecnologias suportam uma implementação incremental, permitindo iterar rapidamente sobre a interface e o comportamento da aplicação, ao mesmo tempo que promovem uma base de código organizada, legível e sustentável.
 
 \begin{itemize}
-  \item Implementação de uma abordagem drag-and-drop.
-  \item Integração de \textit{screenshots} reais para dar suporte aos elementos visuais.
-  \item Capacidade de desenvolver várias opções de layout do dashboard.
-  \item Implementação de atalhos como \textit{copy-past} e duplicação.
-  \item Suporte para diferentes perfis de utilizador.
-  \item Capacidade de representar os elementos segundo o meta-modelo apresentado em~\ref{app:meta_modelo_app}.
-  \item Capacidade de oferecer uma visão detalhada sobre cada elemento utilizado (tipo de visualização, dados utilizados, objetivos de visualização).
-  \item Capacidade de simular o comportamento do \textit{dashboard}.
-  \item Capacidade de recolher \textit{feedback} dos utilizadores sobre o \textit{dashboard} criado.
+  \item \textbf{React}: \textit{framework} JavaScript para construção da interface gráfica de forma modular e reativa. Permite organizar a aplicação em componentes reutilizáveis e gerir atualizações do estado de forma eficiente, suportando a natureza dinâmica de um editor interativo~\cite{react}.
+  \item \textbf{TypeScript}: \textit{superset} de JavaScript que introduz tipagem estática e verificação de tipos em tempo de compilação. Esta característica facilita a deteção de erros, melhora a legibilidade do código e aumenta a robustez na gestão de estruturas de dados complexas, relevantes num sistema com múltiplos tipos de nós e propriedades~\cite{typescript}.
+  \item \textbf{Vite}: ferramenta de \textit{build} e desenvolvimento que acelera o ciclo de implementação através de arranque rápido e \textit{hot reload}. Esta abordagem melhora a produtividade ao permitir iterar rapidamente sobre alterações na interface e lógica do editor~\cite{vite}.
+  \item \textbf{Tailwind CSS}: \textit{framework} CSS que permite criar interfaces responsivas e consistentes com menor sobrecarga de CSS manual. A utilização de classes utilitárias facilita a manutenção do estilo e acelera a prototipagem de componentes visuais~\cite{tailwindcss}.
 \end{itemize}
 
-\end{comment}
+\subsection{Bibliotecas Principais}
+\label{subsec:cap3_bibliotecas_principais}
+
+Para além das tecnologias base, a implementação do \textit{Dashboard Designer} exige bibliotecas que suportem diretamente funcionalidades centrais do domínio: criação de elementos por interação direta, manipulação de estruturas visuais com múltiplos componentes, e mecanismos de persistência e portabilidade de projetos sem dependência de infraestrutura externa. Por esta razão, são selecionadas bibliotecas orientadas a necessidades específicas, como \textit{drag-and-drop}, empacotamento de projetos para exportação e armazenamento local eficiente.
+
+Estas bibliotecas permitem que a ferramenta ofereça uma experiência centrada no utilizador, reduzindo fricção durante a criação de protótipos e assegurando que projetos com recursos pesados (por exemplo, imagens) podem ser geridos de forma fluída no navegador, mantendo a aplicação responsiva.
+
+\begin{itemize}
+  \item \textbf{dnd-kit}: biblioteca para suportar padrões de \textit{drag-and-drop}, permitindo construir interações de arrastar e largar de forma controlada e extensível, especialmente útil na criação de nós a partir de um menu de componentes~\cite{dndkit}.
+  \item \textbf{JSZip}: biblioteca para criação e manipulação de ficheiros \texttt{.zip} no navegador. Permite empacotar a configuração de um projeto e recursos associados (por exemplo, imagens), suportando exportação/importação de forma simples e portável~\cite{jszip}.
+  \item \textbf{IndexedDB}: API nativa do navegador para armazenamento local estruturado. É relevante para persistir projetos e suportar recursos pesados (por exemplo, imagens) sem depender de um servidor, contribuindo para melhor desempenho durante operações de edição~\cite{IndexedDB}.
+\end{itemize}
+
+\subsubsection{React Flow}
+\label{subsubsec:cap3_reactflow}
+
+O \textit{React Flow} é uma biblioteca para construção de interfaces baseadas em grafos, suportando a criação e manipulação de nós e arestas em ambientes interativos~\cite{reactflow}. A sua escolha está diretamente associada ao paradigma do \textit{Dashboard Designer}: representar componentes e relações de um \textit{dashboard} de forma visual, explícita e manipulável. Ao fornecer uma abstração sólida para o \textit{canvas} e para operações comuns (como movimentação, ligação e renderização de elementos), o \textit{React Flow} reduz complexidade de implementação e permite concentrar o desenvolvimento nas regras e necessidades específicas do domínio.
+
+Adicionalmente, a possibilidade de personalizar nós e arestas é essencial para adaptar a interface ao meta-modelo proposto, permitindo que diferentes tipos de elementos sejam representados com semânticas próprias, sem perder consistência de interação no editor.
+
+Os principais aspetos que justificam a escolha do \textit{React Flow} incluem:
+\begin{itemize}
+  \item \textbf{Representação e manipulação de grafos}: suporte direto a nós e ligações, adequado à modelação de componentes e dependências.
+  \item \textbf{Interação no canvas}: funcionalidades de navegação (como \textit{zoom} e \textit{pan}) para explorar protótipos com diferentes níveis de complexidade.
+  \item \textbf{Personalização}: possibilidade de definir nós e arestas personalizados, permitindo adequar a representação aos elementos do meta-modelo.
+  \item \textbf{Escalabilidade e desempenho}: mecanismos de renderização e interação preparados para cenários com múltiplos elementos no canvas.
+\end{itemize}

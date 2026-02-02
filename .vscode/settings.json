@@ -1,11 +1,20 @@
 {
-    "github.copilot.enable": {
-        "*": true,
-        "plaintext": false,
-        "markdown": false,
-        "scminput": false
-    },
-    "cSpell.words": [
-        "Keim"
-    ]
+  "github.copilot.enable": {
+    "*": true,
+    "plaintext": false,
+    "markdown": false,
+    "scminput": false
+  },
+  "cSpell.words": [
+    "Keim",
+    "metadados",
+    "novathesis",
+    "phdplan",
+    "responsiva",
+    "responsividade",
+    "subprocessos",
+    "tipagem",
+    "ulisboa",
+    "Vite"
+  ]
 }
