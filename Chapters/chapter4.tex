@@ -44,7 +44,7 @@ A estrutura do protótipo é descrita pelo conjunto de nós e ligações, comple
 
 Um requisito fundamental do \textit{Dashboard Designer} é permitir que os projetos desenvolvidos sejam preservados e partilhados entre diferentes utilizadores. Para esse efeito, o sistema separa claramente \textbf{dados estruturais} (grafo e metadados) de \textbf{recursos pesados} (imagens associadas a \textit{screenshots}). A informação estrutural do projeto, nomeadamente a configuração do \textit{canvas} e a definição dos nós e das arestas, é guardada num formato JSON. Já as imagens associadas aos \textit{dashboards} são armazenadas localmente no navegador através do \textit{IndexedDB}, permitindo gerir estes recursos de forma eficiente sem sobrecarregar a informação principal do projeto. Esta decisão melhora a responsividade do editor e simplifica o ciclo de edição e revisão, especialmente quando o utilizador manipula múltiplos elementos com suporte visual.
 
-De forma a permitir que os protótipos possam ser partilhados e reutilizados, o \textit{Dashboard Designer} utiliza um formato próprio de ficheiro com a extensão \texttt{.dashboard}. Este ficheiro reúne, num único elemento, toda a informação necessária para voltar a abrir um protótipo: a estrutura do grafo (nós e arestas), alguns parâmetros do editor (a área visível no \textit{canvas}) e as referências aos recursos associados, como imagens. Quando o utilizador exporta um projeto, a aplicação cria este ficheiro com a estrutura e os recursos necessários; quando importa um projeto, o processo é inverso, reconstruindo o grafo e restaurando os recursos para que o protótipo possa ser visualizado e editado novamente. Esta abordagem facilita a partilha de protótipos entre utilizadores e permite preservar o trabalho desenvolvido sem depender de servidores de \textit{backend} externos.
+De forma a permitir que os protótipos possam ser partilhados e reutilizados, o \textit{Dashboard Designer} utiliza um formato próprio de ficheiro com a extensão \texttt{.dashboard}. Este ficheiro reúne, num único elemento, toda a informação necessária para voltar a abrir um protótipo: a estrutura do grafo (nós e arestas), alguns parâmetros do editor (a área visível no \textit{canvas}) e as referências aos recursos associados, como imagens. Quando o utilizador exporta um projeto, a aplicação cria este ficheiro com a estrutura e os recursos necessários. Quando o projeto é importado, o processo é o inverso, reconstruindo o grafo e restaurando os recursos para que o protótipo possa ser visualizado e editado novamente. Esta abordagem facilita a partilha de protótipos entre utilizadores e permite preservar o trabalho desenvolvido sem depender de servidores de \textit{backend} externos.
 
 Com a arquitetura do sistema definida, as secções seguintes descrevem as funcionalidades da aplicação em detalhe. A Secção~\ref{sec:cap4_editor_mode} aprofunda o \textit{Modo de Edição}, descrevendo o ambiente de edição, criação/manipulação de nós e o processo de configuração semântica do protótipo. A Secção~\ref{sec:cap4_review_mode} descreve o \textit{Modo de Recolha de Feedback}, dedicado à análise e recolha de \textit{feedback} contextualizado diretamente sobre elementos do \textit{dashboard}, suportando iteração e colaboração dentro da própria ferramenta.
 
@@ -53,36 +53,206 @@ Com a arquitetura do sistema definida, as secções seguintes descrevem as funci
 
 \subsection{Ambiente de Edição e Canvas}
 \label{subsec:cap4_editor_canvas}
-% (texto a desenvolver)
+
+O \textit{Modo de Edição} constitui o ambiente principal de trabalho do \textit{Dashboard Designer}, onde o utilizador constrói protótipos através da criação e organização de elementos representados como nós e ligações. A interface foi desenhada para ocupar a totalidade do ecrã, proporcionando uma área ampla de edição e evitando limitações associadas a janelas reduzidas. Esta abordagem é particularmente relevante num editor baseado em grafos, dado que a complexidade e o número de elementos pode aumentar rapidamente ao longo do processo de prototipagem.
+
+A base do ambiente de edição é o \textit{canvas} interativo implementado com \textit{React Flow}, responsável por representar o grafo do protótipo e suportar interação direta com os seus elementos. No \textit{canvas}, os nós correspondem a componentes do \textit{dashboard} e as arestas representam relações entre esses componentes. Para melhorar a legibilidade e facilitar orientação espacial durante a edição, o editor inclui uma camada de fundo (\textit{Background}) e um conjunto de controlos de navegação (\textit{Controls}), permitindo uma interação contínua com o protótipo mesmo quando este ocupa áreas extensas do espaço de trabalho.
+
+A navegação no \textit{canvas} é suportada por operações de \textit{pan} e \textit{zoom}, com limites definidos para evitar escalas extremas, permitindo alternar entre uma visão global do protótipo e uma inspeção local de áreas específicas. Estas opções encontram-se disponíveis nos \textit{Controls} do editor, localizados no canto inferior esquerdo da interface. Em paralelo, o \textit{React Flow} permite selecionar elementos através de uma abordagem \textit{drag-and-drop} no \textit{canvas}. Para que o utilizador controle melhor este comportamento, é possível que o utilizador alterne entre dois modos de seleção: \textit{lasso}, onde é permitido ao utilizador selecionar múltiplos nós ao selecionar e arrastar o rato pela interface; e navegação, em que o mesmo gesto é utilizado para mover a área visível do \textit{canvas}. Desta forma, o utilizador consegue adaptar a metodologia de seleção consoante a tarefa que pretende realizar.
+
+A aplicação inclui ainda controlos globais que apoiam a edição e a revisão do protótipo desenvolvido. Em particular, é disponibilizada uma opção para controlar a visibilidade das ligações de interação no \textit{canvas}, permitindo reduzir o ruído visual quando o protótipo possui um elevado número de interações entre os diferentes elementos. Esta funcionalidade é particularmente útil em fases de refinamento, onde o utilizador pode optar por focar-se na estrutura e composição dos nós, e apenas visualizar as interações quando assim deseja.
+
+Para além do \textit{canvas}, a aplicação disponibiliza elementos adicionais na interface que suportam o processo de edição. Em particular, o \textit{SideMenu} apresenta os componentes disponíveis para construção do protótipo (por exemplo, visualizações, filtros e \textit{placeholders}), permitindo iniciar a criação de nós através de uma abordagem \textit{drag-and-drop}. Adicionalmente, a zona superior do ecrã disponibiliza controlos de produtividade, como \textit{undo/redo} e operações associadas à gestão de projetos, como importar e exportar. Por fim, é disponibilizado um seletor explícito de modo (\textit{Editor}/\textit{Review}) que permite alternar entre edição e revisão, mantendo o \textit{canvas} como elemento central do processo de prototipagem.
 
 \subsection{Criação e Manipulação de Nós}
 \label{subsec:cap4_editor_nos}
-% (texto a desenvolver)
-%aqui pode ser so falar sobre como creio os nos e como e que os manipulo a nível visual e de propriedades
 
+A criação de nós no Modo de Edição pode ser realizada de duas formas complementares. A primeira consiste em arrastar componentes a partir do \textit{SideMenu} para o \textit{canvas}, recorrendo a uma abordagem \textit{drag-and-drop}. A segunda forma consiste em criar novos nós a partir do menu de um nó já existente, sempre que esse nó desempenhe um papel de contentor e admita elementos inseridos no seu interior. 
+
+Relativamente à abordagem de \textit{drag-and-drop}, o \textit{SideMenu} apresenta uma variedade de componentes organizados por secções (Visualização, Interação e \textit{Layout}), onde cada elemento corresponde a um tipo de nó suportado pelo \textit{Dashboard Designer}. Cada um destes elementos é configurado como um elemento arrastável através do \textit{dnd-kit}, transportando consigo toda a informação necessária para indicar ao editor qual o tipo de nó a ser criado.
+
+Durante a ação de \textit{drag-and-drop}, a aplicação utiliza um \textit{DragOverlay} para apresentar uma pré-visualização do elemento selecionado, aumentando a previsibilidade da ação e tornando mais claro para o utilizador o componente que será inserido no \textit{canvas}. Esta pré-visualização é materializada pelo componente \texttt{NodeGhost}, que representa graficamente o tipo de nó selecionado. Desta forma, o utilizador mantém uma referência visual consistente do nó a ser inserido no canvas.
+
+Para minimizar erros indesejados durante o processo de \textit{drag-and-drop} de elementos para o \textit{canvas}, foi adicionada uma \textit{TrashZone} no \textit{SideMenu}. Esta zona funciona como uma área de cancelamento da ação, isto é, caso o utilizador inicie o \textit{drag} de um componente e decida não o inserir no \textit{canvas}, pode largá-lo diretamente na \textit{TrashZone}, interrompendo a ação e evitando a criação acidental de um nó não desejado. Esta funcionalidade melhora a robustez da interação e torna o fluxo de criação mais tolerante a erros, evitando obrigar o utilizador a criar o nó e removê-lo posteriormente.
+
+Para garantir que a inserção de nós é consistente em contextos hierárquicos, a aplicação identifica automaticamente o contentor mais adequado durante o gesto de \textit{drag-and-drop}. Em particular, quando o utilizador posiciona um componente sobre uma zona onde existem múltiplos contentores sobrepostos, a aplicação privilegia o contentor mais específico, isto é, o nó que se encontra mais "interno" na hierarquia. Esta estratégia reduz ambiguidades durante a inserção e permite construir protótipos com vários níveis de hierarquia de forma previsível, assegurando que o nó é associado ao contexto pretendido pelo utilizador.
+
+No caso específico de criação de nós através de \textit{drag-and-drop}, a sua criação pode ocorrer em dois cenários complementares, consoante o local onde o nó é inserido. Num primeiro cenário, o utilizador pode largar o componente numa área livre do \textit{canvas}, originando a criação de um nó ao nível \textit{root}. Neste caso, são atribuídos valores base para o nó, como é o caso do título, bem como um tamanho inicial dependente do tipo de componente, assegurando consistência visual e evitando que o nó seja inserido com dimensões inadequadas. No segundo cenário, o utilizador pode largar um componente dentro de um contentor, permitindo criar nós como filhos de outros nós. Para este caso, a aplicação verifica se a inserção é permitida de acordo com as regras semânticas do domínio. Estas regras são implementadas de forma centralizada, garantindo que apenas combinações válidas sejam aceites. Quando a inserção não é permitida, o editor fornece uma indicação imediata ao utilizador (cursor \textit{not-allowed}), evitando operações inválidas antes mesmo da criação do nó.
+
+Após a inserção, o nó pode ser ajustado diretamente no \textit{canvas}: o utilizador pode reposicioná-lo e, quando aplicável, redimensioná-lo de forma a refletir melhor o \textit{layout} pretendido. Estas ações são essenciais num processo de prototipagem iterativo, onde a organização espacial tende a ser refinada ao longo do tempo. Quando um nó é criado dentro de outro (passando a ser um nó filho), o editor mantém essa relação de forma explícita, garantindo que o nó é manipulado no contexto do respetivo contentor. Na prática, isto significa que o utilizador pode reposicionar o nó dentro do contentor, mas o seu movimento fica condicionado aos limites dessa área, evitando que o elemento saia da região onde deve existir.
+
+Para além de ser possível adicionar nós através de uma abordagem \textit{drag-and-drop}, a segunda forma de criação de nós é particularmente útil quando o utilizador pretende trabalhar dentro de um contexto específico, adicionando elementos diretamente ao nó selecionado. Sempre que um nó admite elementos no seu interior, a aplicação disponibiliza uma opção de inserção a partir do menu do nó selecionado (\textit{ComponentsMenu}). Este mecanismo complementa o \textit{drag-and-drop} e reduz o número de passos necessários para inserir elementos em estruturas hierárquicas. Esta adição é feita através da opção de \textit{Add Component} dentro do menu de cada nó, abrindo um \textit{popup} que apresenta os diferentes nós que são aceites como filhos do nó selecionado, desta forma restringimos a criação de nós a contextos válidos, evitando erros de implementação indesejados.
+ 
 \subsection{Edição de Propriedades e Estrutura Semântica}
 \label{subsec:cap4_editor_propriedades}
-% (texto a desenvolver)
+
+Após a criação e posicionamento dos nós no \textit{canvas}, o passo seguinte consiste em atribuir significado ao protótipo através da edição das propriedades associadas a cada componente. Nesta fase, a edição de propriedades não serve apenas para configurar a aparência dos elementos, mas sim para registar a informação que descreve cada componente (dados, configurações e contexto), garantindo alinhamento com o meta-modelo implementado numa fase inicial (Secção~\ref{sec:meta_modelo}). Desta forma, a edição de propriedades funciona como o mecanismo central da aplicação para transformar o conjunto de nós e ligações em especificações semântica de um \textit{dashboard}.
+
+O fluxo de edição da aplicação é orientado pelo processo de seleção de nós. Ao selecionar um nó no \textit{canvas}, o utilizador passa a ter acesso às opções de configuração desse elemento através de menus e \textit{popups} dedicados. Esta separação permite manter o \textit{canvas} focado na sua organização estrutural, focando a edição de informação em painéis próprios, sem sobrecarregar a área principal com formulários extensos.
+
+Do ponto de vista interno da aplicação, a informação de cada nó é armazenada num objeto \texttt{NodeData}. Este objeto agrega campos comuns a todos os tipos de nó e campos específicos que dependem do tipo de nó a ser analisado. De forma geral, todos os nós partilham um conjunto de propriedades base que suportam identificação, descrição e estado de interação no editor. Em particular, cada nó contém:
+
+\begin{itemize}
+    \item \textbf{\texttt{id}}: identificador único do nó, utilizado para localizar o elemento no estado do editor e aceder/atualizar a informação associada;
+    \item \textbf{\texttt{kind}}: identifica o tipo do nó (\textit{Visualization}, \textit{Filter}, \textit{Placeholder});
+    \item \textbf{\texttt{title}}: título apresentado ao utilizador para facilitar identificação no \textit{canvas} e nos menus;
+    \item \textbf{\texttt{description}}: descrição opcional que contextualiza o papel do nó no protótipo;
+    \item \textbf{\texttt{perspectives[]}}: coleção de perspetivas/alternativas associadas ao nó, suportando variações do mesmo elemento;
+    \item \textbf{\texttt{interactions[]}}: coleção de interações associadas ao nó, quando aplicável;
+\end{itemize}
+
+Grande parte da edição de propriedades é mediada por \textit{popups} dedicados, utilizados sempre que a configuração exige mais contexto, opções guiadas ou introdução de informação estruturada. Esta abordagem permite manter o \textit{canvas} limpo e centrado na composição do protótipo, ao mesmo tempo que oferece ao utilizador um fluxo de edição consistente e orientado. No \textit{Dashboard Designer}, foram desenvolvidos vários \textit{popups} especializados, cada um focado num tipo de configuração específico:
+
+\begin{itemize}
+    \item \textbf{\texttt{AddComponentPopup}}: suporta a criação contextual de novos nós a partir de um nó contentor. Este \textit{popup} apresenta apenas os tipos de componentes compatíveis com o nó selecionado, orientando o utilizador para estruturas válidas e reduzindo erros semânticos durante a edição.
+
+    \item \textbf{\texttt{DataPopup}}: concentra a definição e edição de atributos de dados associados aos elementos do protótipo. Permite registar de forma estruturada quais os dados relevantes para uma visualização, legenda, filtro ou \textit{tooltip}, promovendo consistência na documentação de dados ao longo do \textit{dashboard}.
+
+    \item \textbf{\texttt{GraphTypePopup}}: permite selecionar e configurar o tipo de gráfico associado a uma representação visual. Durante este processo, a ferramenta pode apresentar indicações contextuais através do \textit{ShowMeHint}, apoiando o utilizador na escolha do tipo de gráfico e reduzindo incerteza durante a configuração.
+
+    \item \textbf{\texttt{GraphFieldsPopup}}: foca-se na configuração dos campos/atributos relevantes para a representação do gráfico, ajudando a estruturar a informação necessária para descrever como os dados são organizados na visualização.
+
+    \item \textbf{\texttt{GraphMarkPopup}}: agrega opções relacionadas com a marca e caracterização visual do gráfico, complementando a definição do tipo de representação e reforçando a documentação do aspeto visual da visualização.
+
+    \item \textbf{\texttt{VisualVariablePopup}}: suporta a definição de variáveis visuais associadas às representações (por exemplo, codificações visuais usadas para distinguir valores ou categorias), promovendo consistência na forma como os dados são codificados visualmente.
+
+    \item \textbf{\texttt{InteractionPopup}}: suporta a criação e edição de interações associadas a nós, permitindo registar a informação necessária para descrever comportamento interativo e relações que serão posteriormente materializadas no \textit{canvas}.
+
+    \item \textbf{\texttt{TooltipPopup}}: permite configurar a informação apresentada em \textit{tooltips} e a sua associação a componentes relevantes do protótipo, facilitando a documentação de informação adicional contextual sem comprometer a legibilidade do \textit{canvas}.
+
+    \item \textbf{\texttt{SavePopup}}: agrega operações associadas à gestão de projetos, nomeadamente ações de persistência, importação e exportação, centralizando operações globais essenciais ao fluxo de trabalho.
+
+\end{itemize}
+
+As propriedades específicas variam consoante o tipo de nó e são editadas através de menus contextuais e \textit{popups} dedicados. A Tabela~\ref{tab:node_specific_props} sintetiza os principais atributos específicos considerados no editor e a sua finalidade.
+
+\begin{table}[htbp]
+\centering
+\caption{Propriedades específicas por tipo de nó (\texttt{NodeData}), editadas através dos menus contextuais e \textit{popups} dedicados.}
+\label{tab:node_specific_props}
+\begin{tabularx}{\textwidth}{@{}lX@{}}
+\toprule
+\textbf{Tipo de nó} & \textbf{Propriedades específicas e finalidade} \\
+\midrule
+
+\textit{Visualization} &
+\textbf{\texttt{data[]}}: lista de atributos/dados relevantes (itens com \texttt{id}, nome e tipo de dado); \newline
+\textbf{\texttt{graphTypes[]}}: tipos de gráfico suportados/selecionáveis; \newline
+\textbf{\texttt{visualVars[]}}: variáveis visuais consideradas; \newline
+\textbf{\texttt{tooltips[]}}: referências a \textit{tooltips} ligados à visualização. \\
+
+\textit{Graph} &
+\textbf{\texttt{graphType}}: tipo de gráfico selecionado; \newline
+\textbf{\texttt{previewImageId}}: referência para imagem de pré-visualização. \\
+
+\textit{Legend} &
+\textbf{\texttt{data[]}}: atributos/dados representados na legenda; \newline
+\textbf{\texttt{visualVars[]}}: variáveis visuais descritas/explicadas. \\
+
+\textit{Tooltip} &
+\textbf{\texttt{data[]}}: dados exibidos no \textit{tooltip}; \newline
+\textbf{\texttt{graphTypes[]}}: tipos de gráfico representáveis; \newline
+\textbf{\texttt{visualVars[]}}: variáveis visuais associadas. \\
+
+\textit{Filter} &
+\textbf{\texttt{data[]}}: atributos/dados sobre os quais o filtro atua. \\
+
+\textit{Parameter} &
+\textbf{\texttt{options[]}}: conjunto de valores/alternativas possíveis; \newline
+\textbf{\texttt{value}}: valor atualmente selecionado/definido. \\
+
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Para além de documentar atributos, a forma como os menus e \textit{popups} são apresentados contribui para impor consistência semântica durante a edição. Em particular, as opções disponibilizadas ao utilizador variam consoante o tipo de nó selecionado e o contexto hierárquico em que este se encontra, evitando expor configurações irrelevantes e reduzindo a probabilidade de combinações incoerentes. Por exemplo, operações de criação contextual (como \textit{Add Component}) apresentam apenas tipos de nós válidos como filhos do elemento selecionado, orientando a construção do protótipo para estruturas compatíveis com as regras do domínio.
+
+Por fim, a edição de propriedades tem impacto direto na leitura global do protótipo: ao longo do processo de prototipagem, o utilizador pode completar e refinar atributos de forma incremental, ajustando títulos, descrições, dados e configurações à medida que a estrutura do \textit{dashboard} evolui. Na secção seguinte (Secção~\ref{subsec:cap4_editor_interacoes_tooltips}), aprofunda-se a forma como esta estrutura é complementada através da criação de relações entre componentes --- nomeadamente interações e \textit{tooltips} --- onde se tornam centrais as ligações, dependências e validações associadas ao protótipo.
 
 \subsection{Interações e Tooltips}
 \label{subsec:cap4_editor_interacoes_tooltips}
-% aqui incluis: criação de ligações, dependências, validações, e lógica das tooltips/interações
+
+A definição de \textit{interações} e de \textit{tooltips} constitui uma das etapas mais relevantes do \textit{Editor Mode}, uma vez que permite descrever não só a estrutura do \textit{dashboard}, mas também o seu comportamento e o tipo de informação contextual disponibilizada ao utilizador. Enquanto que as secções anteriores se focaram na criação de nós e na configuração das suas propriedades, nesta subsecção, descreve-se como o \textit{Dashboard Designer} suporta a modelação de relações funcionais entre componentes. Na prática, estas relações facilitam a identificação das interações entre os diferentes nós do protótipo, e que informação adicional deve ser apresentada ao utilizador quando efetua determinadas ações sobre as diferentes visualizações, tornando a implementação do protótipo o mais próxima possível do \textit{dashboard} real.
+
+De um ponto de vista conceptual, o \textit{Dashboard Designer} representa um protótipo desenvolvido sob a forma de um grafo, onde os nós modelam elementos do \textit{dashboard} e as arestas materializam relações entre esses elementos. No entanto, nem todas as relações possuem o mesmo significado. Para manter clareza e reduzir ambiguidade na leitura do protótipo, a ferramenta distingue categorias de ligações no \textit{canvas}. Em particular, são suportadas ligações associadas a \textbf{interações}, que descrevem dependências funcionais entre componentes, e ligações associadas a \textbf{tooltips}, que descrevem associações de informação contextual adicional numa visualização. Esta distinção é importante porque permite aplicar regras específicas por categoria e fornece ao utilizador uma leitura mais imediata do tipo de relação representada.
+
+A criação de interações é feita através de um \textit{popup} dedicado, o \texttt{InteractionPopup}, que permite ao utilizador configurar de forma simples o comportamento entre os diferentes elementos do protótipo. Na Figura~\ref{fig:cap4_interaction_popup} é ilustrado este \textit{popup}. Em primeiro lugar, o utilizador define o \textbf{nome da interação}, este nome tem como principal objetivo descrever de forma breve a ação que está a ser configurada no protótipo. De seguida, é especificado o \textbf{\textit{trigger}} da interação, isto é, o evento que irá desencadear a ação (\textit{click} ou \textit{hover}). Este campo está disponível apenas no nó de \textit{Visualization}, uma vez que, em nós como \textit{Legend}, \textit{Filter}, \textit{Parameter} e \textit{Button}, o \textit{trigger} é fixo, sendo sempre configurados com \textit{click}. Após esta seleção, o utilizador define o \textbf{efeito} da interação, ou seja, o tipo de resultado que ocorre quando a interação é acionada. De forma semelhante ao campo de \textit{trigger}, existem determinados nós que possuem este campo com um valor fixo: no nó \textit{Filter}, o efeito é de filtro; no nó \textit{Button}, o efeito é de navegação; e no nó \textit{Parameter}, o efeito é de \textit{parameter binding}. Em seguida, o utilizador define a \textbf{origem da interação}, que determina se a interação é originada diretamente do nó em questão ou de um atributo de dados associado a ele. Esta opção está disponível exclusivamente para o nó \textit{Visualization}, sendo que para os restantes nós a interação parte sempre do nó como um todo e não dos possíveis atributos de dados que possam ter na sua estrutura. Por fim, o utilizador escolhe os \textbf{componentes afetados}. A seleção destes nós é filtrada para exibir apenas aqueles que podem ser afetados pelo tipo de interação a ser criado, garantindo que interações inválidas não sejam configuradas. Este fluxo orientado tem uma vantagem principal no contexto de prototipagem: reduz a probabilidade de erros, pois o utilizador não necessita de memorizar regras implícitas nem configurar interações de forma dispersa. Após a configuração, a relação definida é refletida no \textit{canvas} através de ligações específicas, permitindo ao utilizador visualizar as dependências existentes entre os diferentes elementos do protótipo.
+
+De forma complementar, os \textit{tooltips} são utilizados para documentar informação contextual adicional associada a uma visualização sem ocupar espaço permanentemente no seu \textit{layout}. Do ponto de vista do design de \textit{dashboards}, este tipo de informação é essencial para enriquecer as visualizações, oferecendo mais contexto e detalhes ao utilizador. No \textit{Dashboard Designer}, a configuração dos \textit{tooltips} é suportada por um \textit{popup} dedicado, o \texttt{TooltipPopup}, ilustrado na Figura~\ref{fig:cap4_tooltip_popup}. O fluxo de configuração inicia-se com a definição do \textbf{nome} do \textit{tooltip}, este nome será apresentado no \textit{header} do nó após a sua criação no \textit{canvas}, tornando a sua identificação clara e direta. O próximo passo é especificar se o \textit{tooltip} estará \textbf{conectado} através de uma interação sobre a visualização ou sobre um atributo de dados específico dessa visualização. Esta distinção é crucial, uma vez que permite associar \textit{tooltips} com níveis de granularidade diferente: desde informação mais geral sobre a visualização, até informações específicas para atributos ou elementos de dados concretos, suportando assim múltiplos \textit{tooltips} numa mesma visualização. De seguida, o utilizador define o tipo de \textbf{evento} que irá ser utilizado para ativar o \textit{tooltip}. Esta escolha reflete o tipo de ação que o utilizador tem de realizar no \textit{dashboard} real para exibir a informação contida no \textit{tooltip} desenvolvido. Por fim, a relação entre o \textit{tooltip} e a visualização é estabelecida, garantindo que a sua ligação é desenhada no protótipo. Tal como acontece com as interações, a utilização de um \textit{popup} dedicado para \textit{tooltips} promove consistência e reduz o ruído visual no \textit{canvas}. Em vez de introduzir texto ou detalhes diretamente sobre a representação principal, o utilizador regista a informação de forma organizada e reutilizável. Esta abordagem é particularmente importante em protótipos que integram múltiplas visualizações e relações.
+
+Um aspeto importante na definição de interações e \textit{tooltips}, é garantir consistência semântica à medida que o protótipo cresce. Para isso, o \textit{Dashboard Designer} restringe as opções apresentadas ao utilizador consoante o tipo de nó, impedindo a criação de interações e \textit{tooltips} não permitidas no \textit{canvas}. Esta validação contínua permite que as relações representadas se mantenham coerentes com as regras do domínio, sem exigir que o utilizador memorize restrições implícitas. %Em paralelo, a presença de múltiplas interações e associações de \textit{tooltips} pode tornar a leitura do protótipo visualmente mais complexa. Por este motivo, a ferramenta disponibiliza mecanismos para gerir o ruído visual associado a estas ligações, permitindo ao utilizador alternar entre uma vista mais estrutural (focada nos nós e hierarquia) e uma vista mais comportamental (onde se inspecionam dependências e relações). Esta capacidade de alternar o foco da interface é especialmente útil em fases diferentes do processo: durante a composição inicial privilegia-se a estrutura, enquanto em fases de refinamento se torna mais importante analisar e validar as relações estabelecidas.
+
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[height=4.2cm,keepaspectratio]{interactionPopup}
+        \caption{\texttt{InteractionPopup}: configuração de interações.}
+        \label{fig:cap4_interaction_popup}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[height=4.2cm,keepaspectratio]{tooltipPopup}
+        \caption{\texttt{TooltipPopup}: definição de conteúdo e associação contextual de \textit{tooltips}.}
+        \label{fig:cap4_tooltip_popup}
+    \end{subfigure}
+
+    \caption{\textit{Popups} utilizados no \textit{Editor Mode} para configurar interações e \textit{tooltips}.}
+    \label{fig:cap4_interaction_tooltip_popups}
+\end{figure}
 
 \section{Modo de Recolha de Feedback}
 \label{sec:cap4_review_mode}
 
-\subsection{Conceito e Objetivo}
-\label{subsec:cap4_review_conceito}
-% (texto a desenvolver)
-
 \subsection{Bloqueio de Edição e Mudança de Comportamento}
 \label{subsec:cap4_review_bloqueio}
-% (texto a desenvolver)
+
+A transição para o \textit{Review Mode} implica uma alteração deliberada do comportamento do editor, com o objetivo de separar claramente duas fases distintas do processo: (i) a fase de construção e prototipagem, e (ii) a fase de análise e recolha de \textit{feedback}. Para garantir que a revisão decorre de forma controlada, o \textit{Dashboard Designer} introduz um bloqueio explícito das funcionalidades de edição, reduzindo o risco de alterações acidentais ao protótipo e reforçando que o foco passa a estar na inspeção e recolha de \textit{feedback} de forma estruturada.
+
+Em termos funcionais, o bloqueio de edição traduz-se na desativação das operações típicas do \textit{Editor Mode}. Em particular, deixa de ser possível criar novos nós (quer por \textit{drag-and-drop} a partir do \textit{SideMenu}, quer através de inserção contextual a partir de nós contentores), remover elementos do protótipo, reposicionar componentes através de arrasto no \textit{canvas} ou alterar a sua hierarquia, bem como redimensionar nós através de operações de \textit{resize}. Adicionalmente, operações que modificam a conectividade do grafo são igualmente bloqueadas, impedindo o utilizador de criar novas ligações entre nós, alterar ligações existentes ou remover arestas. Como consequência, o estado estrutural do protótipo permanece estável durante toda a sessão de revisão, evitando alterações acidentais que poderiam comprometer a análise. Do mesmo modo, as ações disponíveis nos menus e controlos contextuais passam a estar orientadas apenas para consulta, sendo desativadas todas as opções que introduzam alterações no protótipo. Isto inclui, ações de criação de componentes através do \textit{ComponentsMenu}, opções de remoção de nós, bem como interações de edição que alterem propriedades estruturais relevantes para o modelo. Na prática, sempre que uma ação implique modificar o conjunto de nós/arestas ou reconfigurar a estrutura do protótipo, essa ação deixa de estar disponível no \textit{Review Mode}. Desta forma, o utilizador consegue inspecionar e navegar pelo \textit{dashboard} com segurança, com a garantia de que o grafo representado se mantém inalterado ao longo do processo de recolha de \textit{feedback}.
+
+Apesar do bloqueio de edição, a navegação no \textit{canvas} mantém-se disponível, permitindo ao utilizador explorar o protótipo de forma eficaz. Operações como \textit{zoom} e \textit{pan} continuam ativas, uma vez que são essenciais para inspecionar protótipos extensos e para localizar rapidamente os elementos relevantes. Da mesma forma, a seleção de nós e de ligações permanece funcional, mas com um propósito diferente: em vez de abrir fluxos de edição de propriedades, a seleção é usada como ponto de entrada para o registo de \textit{feedback} contextualizado (detalhado na Secção~\ref{subsec:cap4_review_integracao}).
+
+Esta mudança de comportamento é acompanhada por uma adaptação da interface, de forma a tornar o modo ativo mais evidente e a orientar o utilizador para as ações relevantes. Um exemplo desta adaptação é o \textit{SideMenu}, que no \textit{Editor Mode} apresenta a paleta de componentes disponíveis para construção do protótipo, mas no \textit{Review Mode} passa a privilegiar a navegação e consulta das revisões existentes no protótipo a ser analisado. Em conjunto, estas decisões asseguram que o \textit{Review Mode} funciona como um ambiente dedicado à análise do protótipo, reduzindo fricção na recolha de observações e evitando que o processo de revisão seja contaminado por operações de edição não intencionais.
 
 \subsection{Recolha de Feedback}
 \label{subsec:cap4_review_integracao}
-% (texto a desenvolver)
+
+Com o \textit{Review Mode} ativo e as funcionalidades de edição desativadas, o foco da ferramenta passa a ser a recolha de \textit{feedback} de forma direta e contextualizada. O objetivo principal desta funcionalidade é permitir que as observações dos utilizadores sejam registadas no próprio protótipo, associando cada comentário a um elemento concreto do \textit{dashboard} --- um nó ou uma ligação. Esta associação explícita reduz ambiguidades durante a revisão, uma vez que o autor do protótipo consegue identificar qual o componente a que o comentário se refere e em que contexto foi realizado.
+
+O fluxo de recolha de \textit{feedback} é orientado pela seleção no \textit{canvas}. Quando o utilizador seleciona um nó ou uma aresta no \textit{Review Mode}, o menu contextual do elemento (\textit{ComponentsMenu}) deixa de apresentar opções de edição e passa a disponibilizar um formulário de comentário (\textit{ReviewMenu}). Desta forma, o utilizador pode registar \textit{feedback} diretamente sobre o elemento selecionado, ficando a revisão associada ao respetivo nó ou ligação. Esta abordagem evita descrições gerais e ambíguas, sendo particularmente útil em protótipos densos, onde a quantidade de visualizações e ligações torna difícil referenciar componentes de forma inequívoca.
+
+O formulário de recolha foi desenhado para captar não apenas texto livre, mas também informações extra que ajudam a estruturar e a priorizar as observações feitas. Em particular, o \textit{ReviewMenu} permite ao utilizador caracterizar cada comentário através de campos como:
+
+\begin{itemize}
+    \item \textbf{Nome do utilizador (opcional)}: identificação opcional do nome do utilizador a efetuar o comentário;
+    \item \textbf{Nível de importância/prioridade}: campo que permite classificar a relevância do comentário;
+    \item \textbf{Descrição}: campo textual onde o utilizador descreve a observação de forma mais detalhada, explicando o problema identificado ou a sugestão proposta.
+\end{itemize}
+
+Após a personalização e criação de um comentário no sistema, o \textit{Dashboard Designer} permite que o mesmo seja acompanhado ao longo de todo o seu processo de revisão. Para esse efeito, o \textit{ReviewMenu} disponibiliza um conjunto de ações para gerir o comentário, permitindo ao utilizador acompanhar todo o seu processo de revisão. Em particular, cada comentário pode ser:
+
+\begin{itemize}
+    \item \textbf{Marcado como resolvido}: permite assinalar que a observação foi tratada, distinguindo comentários pendentes de comentários já resolvidos durante a revisão;
+    \item \textbf{Editado}: possibilita alterar o conteúdo previamente registado, por exemplo para clarificar a observação, corrigir informação ou atualizar a descrição após discussão;
+    \item \textbf{Respondido}: permite registar uma resposta associada ao comentário, suportando um diálogo curto entre o \textit{designer} e o utilizador final;
+    \item \textbf{Removido}: permite eliminar comentários incorretos, redundantes ou que deixaram de ser relevantes para o protótipo.
+\end{itemize}
+
+Os comentários criados são guardados como entidades associadas ao protótipo e mantêm uma ligação explícita ao elemento alvo através do seu identificador. Esta ligação garante que, para além do conteúdo e dos campos de caracterização, cada comentário preserva o contexto necessário para ser interpretado corretamente, permitindo localizar o nó ou ligação correspondente no \textit{canvas} sempre que necessário. A forma como estes comentários são apresentados na interface e como o utilizador pode navegar e consultar o \textit{feedback} registado é descrita com maior detalhe na secção seguinte.
+
+\subsection{Visualização do Feedback}
+\label{subsec:cap4_visualizacao_feedback}
+
+Para além de permitir registar comentários de forma contextualizada, o \textit{Review Mode} disponibiliza mecanismos visuais e de navegação que facilitam a consulta do \textit{feedback} ao longo do protótipo. O objetivo principal destes mecanismos é tornar evidente onde existe \textit{feedback} no \textit{canvas} e, em simultâneo, oferecer uma visão mais global dos comentários registados, permitindo navegar rapidamente entre as diferentes observações. Esta abordagem é particularmente relevante em protótipos mais extensos, onde a quantidade de elementos e relações pode dificultar a identificação manual dos nós que necessitam de revisão.
+
+No \textit{canvas}, cada nó que possui comentários associados apresenta um identificador no seu cabeçalho sob a forma de um contador. Este contador permite ao utilizador reconhecer imediatamente quais os elementos que possuem \textit{feedback}, sem necessidade de selecionar cada nó individualmente, funcionando como uma pista visual permanente durante a inspeção do protótipo. Um aspeto importante desta abordagem é a sua propagação na hierarquia: quando um comentário é associado a um nó filho, o contador também é refletido nos nós contentores (pais), sinalizando que existe \textit{feedback} registado dentro dessa secção do protótipo. Esta propagação é particularmente útil em protótipos com hierarquias mais complexas, pois permite identificar rapidamente secções com comentários, mesmo quando estes estão associados a elementos aninhados na estrutura global do \textit{dashboard}.
+
+Para além da sinalização de \textit{feedback} de forma direta no \textit{canvas}, o \textit{SideMenu} adapta-se ao \textit{Review Mode}, passando a assumir um papel mais informativo e orientado à navegação. Enquanto no \textit{Editor Mode} este menu apresentava a paleta de nós disponíveis para inserção por \textit{drag-and-drop}, no modo de revisão passa a apresentar uma lista com todos os comentários registados no protótipo a ser analisado. Esta lista oferece uma visão mais global do \textit{feedback} existente e permite acompanhar o protótipo de forma mais estruturada, sobretudo quando existe um número elevado de comentários, passando a ser necessário analisar a informação de forma mais geral. Para cada \textit{review} no sistema, o \textit{SideMenu} apresenta a sua \textbf{descrição}, o seu \textbf{autor} e a indicação do \textbf{elemento} a que o comentário está associado. Esta informação permite ao utilizador compreender rapidamente o conteúdo e o contexto do \textit{feedback} sem ter de navegar manualmente pelo \textit{canvas} para o identificar. Ao selecionar um comentário nesta lista, a aplicação seleciona automaticamente o nó correspondente no \textit{canvas}, permitindo que o utilizador visualize de imediato a localização do comentário no protótipo e o elemento a que se refere. A partir dessa seleção, é possível aceder ao menu contextual do elemento e consultar o comentário no seu contexto, tornando o processo de revisão mais eficiente e reduzindo o esforço necessário para alternar entre observações dispersas no \textit{dashboard}.
 
 \section{Síntese do Capítulo}
 \label{sec:cap4_sintese}
 % (texto a desenvolver)
+
+Ver se vale mesmo a pena implementar esta secção ou não
