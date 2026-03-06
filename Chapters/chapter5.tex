@@ -11,14 +11,199 @@
 \chapter{Avaliação}
 \label{cha:avaliacao}
 
+Neste capítulo é apresentada a avaliação do \textit{Dashboard Designer} em termos de usabilidade, eficiência e suporte à recolha de \textit{feedback}. Para esse efeito, foi conduzido um estudo com diferentes tipos de utilizadores num ambiente controlado, no qual os participantes utilizaram a aplicação através do navegador e executaram um conjunto de tarefas representativas do processo suportado pela ferramenta. O objetivo foi obter evidência quantitativa e qualitativa sobre a experiência de utilização, identificando pontos fortes e aspetos a melhorar.
+
 \section{Desenho do Estudo e Procedimento}
-\label{sec:desenho_procedimento}
-% (texto a desenvolver)
+\label{sec:cap5_study_design}
+
+\subsection{Contexto e Configuração do Estudo}
+\label{subsec:cap5_context}
+
+A avaliação decorreu em ambiente controlado e de forma remota, através de reuniões online no \textit{Microsoft Teams}~\cite{microsoft_teams_docs}. Cada sessão teve uma duração entre 30 e 45 minutos, variando consoante o perfil do participante e o conjunto de tarefas atribuído. O acesso ao \textit{Dashboard Designer} foi feito através do navegador web, o que permitiu manter condições de utilização consistentes entre participantes e aproximar o estudo do cenário real de utilização da ferramenta.
+
+O agendamento das sessões foi realizado através do \textit{Google Calendar}~\cite{google_calendar_help}, assegurando consistência na marcação de horários e no envio de convites. Durante a reunião, os participantes seguiram um guião estruturado e registaram as suas respostas num formulário desenvolvido no \textit{Google Forms}\footnote{\url{https://docs.google.com/forms/d/e/1FAIpQLSeYJm0z0snDjdXJGKwKBJLGpSEqMygW6_0gHVV_KYliIShJUg/viewform?usp=dialog}}~\cite{google_forms_help}. O formulário foi utilizado ao longo de toda a sessão, servindo tanto para orientar a execução das tarefas como para recolher respostas de forma progressiva.
+
+Esta configuração permitiu acompanhar a execução em tempo real e recolher dados de forma uniforme. Para além das respostas registadas no formulário, foram anotadas observações sobre o desempenho e dificuldades encontradas, incluindo hesitações, erros de interação e pedidos de esclarecimento. Estes registos complementam os resultados do SUS e do NASA-TLX, contribuindo para uma análise mais sólida da usabilidade e do esforço percebido durante a utilização da ferramenta.
+
+\subsection{Objetivo da Avaliação}
+\label{subsec:cap5_objectivo}
+
+O principal objetivo desta avaliação foi verificar se o \textit{Dashboard Designer} é uma ferramenta de fácil utilização e se suporta de forma eficaz as atividades centrais do seu fluxo de trabalho, ou seja, a criação e organização de protótipos bem como a análise e recolha de \textit{feedback} de forma direta na aplicação. Em particular, pretendeu-se avaliar se a ferramenta permite que os utilizadores realizem estas tarefas com baixo esforço, reduzindo o ruído presente na interface e reforçando a clareza na associação de comentários aos elementos do protótipo.
+
+Com base neste propósito, foram definidos os seguintes objetivos de avaliação:
+
+\begin{itemize}
+    \item \textbf{Facilidade de utilização e aprendizagem}: perceber se os utilizadores conseguem compreender rapidamente a interface e executar as ações principais sem necessidade de instruções detalhadas.
+    \item \textbf{Eficiência operacional}: avaliar se o fluxo de trabalho permite construir e rever protótipos de forma fluida, minimizando passos redundantes e reduzindo hesitações durante a execução.
+    \item \textbf{Eficácia na recolha de \textit{feedback}}: analisar se o \textit{Review Mode} permite registar comentários de forma contextualizada e consultar esse \textit{feedback} de forma clara e direta.
+    \item \textbf{Satisfação e perceção global}: recolher a perceção dos participantes sobre a qualidade geral da experiência e a adequação da ferramenta ao cenário a que se destina.
+\end{itemize}
+
+\subsection{Métricas e Dados Recolhidos}
+\label{subsec:cap5_medicoes}
+
+Para avaliar os objetivos do estudo, foi definido um conjunto de métricas recolhidas durante e após a execução das tarefas. Estas métricas permitem medir a usabilidade e a carga de trabalho percebida, e complementar esses resultados com evidência observada durante a interação e com comentários fornecidos pelos participantes. As métricas consideradas foram:
+
+\begin{itemize}
+    \item \textbf{SUS (System Usability Scale)}: utilizado para obter uma medida padronizada de usabilidade percebida pelos participantes, permitindo sintetizar a experiência global de utilização.
+    \item \textbf{NASA-TLX (Task Load Index)}: utilizado para medir a carga de trabalho percebida durante a interação, permitindo avaliar o custo subjetivo associado às tarefas.
+    \item \textbf{Indicadores observacionais}: durante a sessão foram registadas dificuldades reportadas, hesitações, erros de interação e pedidos de esclarecimento.
+    \item \textbf{Comentários qualitativos}: recolha de observações finais e sugestões fornecidas pelos participantes, com o objetivo de identificar causas específicas para dificuldades encontradas e oportunidades de melhoria.
+\end{itemize}
+
+\subsection{Procedimento do Estudo}
+\label{subsec:cap5_procedimento}
+
+O procedimento foi definido de forma a garantir que todas as sessões decorriam sob as mesmas condições e com a mesma sequência de atividades, permitindo comparar resultados entre participantes e entre perfis. Para isso, cada sessão seguiu uma estrutura fixa, desde a introdução inicial à ferramenta até ao preenchimento do questionário final, assegurando que todos os participantes recebiam o mesmo enquadramento e executavam as tarefas de forma orientada. Assim, cada sessão foi organizada em quatro etapas principais:
+
+\begin{enumerate}
+    \item \textbf{Introdução ao estudo e à ferramenta}: numa fase inicial foi apresentada uma descrição geral do \textit{Dashboard Designer}, clarificando o seu objetivo no processo de prototipagem e revisão de dashboards. Foi também explicado, de forma breve, o objetivo da avaliação e a forma como a sessão iria decorrer, incluindo a sequência de tarefas, o registo de respostas ao longo da reunião e o preenchimento do questionário final.
+
+    \item \textbf{Enquadramento das tarefas}: após a seleção do perfil do participante, foi disponibilizado o guião de tarefas correspondente. Nesta fase, foram apresentados vídeos~\footnote{\url{https://drive.google.com/drive/folders/1I_IXdH7aRIp4fprPUNc5WPhluNY-L4WE?usp=sharing}} demonstrativos ajustados ao perfil atribuído, introduzindo as funcionalidades relevantes do \textit{Editor Mode} ou do \textit{Review Mode}. Em seguida, foram atribuídas as tarefas a executar na plataforma, focadas em prototipagem no \textit{Editor Mode} ou em análise e registo de \textit{feedback} no \textit{Review Mode}. Para cada tarefa foram definidos critérios de conclusão, de modo a garantir consistência na execução e reduzir ambiguidades.
+
+    \item \textbf{Execução das tarefas na aplicação}: os participantes executaram as tarefas diretamente na plataforma, seguindo o guião disponibilizado. Durante esta fase foram registadas observações sobre o desempenho e dificuldades, incluindo erros de interação, hesitações e pedidos de esclarecimento.
+    
+    \item \textbf{Questionário e recolha final de perceções}: no final da execução, os participantes preencheram as secções de avaliação quantitativa (NASA-TLX e SUS) e responderam a perguntas abertas destinadas a recolher perceções globais, sugestões e dificuldades não capturadas pelos instrumentos padronizados.
+\end{enumerate}
+
+Este desenho permite avaliar o \textit{Dashboard Designer} de forma alinhada com os seus objetivos: suportar prototipagem eficiente em \textit{Editor Mode} e recolha de \textit{feedback} contextualizado em \textit{Review Mode}, recolhendo simultaneamente medidas padronizadas de usabilidade e carga de trabalho, bem como evidência qualitativa sobre a experiência de utilização.
 
 \section{Perfis de Utilizador e Tarefas}
-\label{sec:perfil_tarefas}
-% (texto a desenvolver)
+\label{sec:cap5_profiles_tasks}
+
+De forma a avaliar o \textit{Dashboard Designer} em cenários alinhados com o processo de desenvolvimento que a ferramenta pretende suportar, o estudo considerou dois perfis distintos de participantes: \textbf{Designer} e \textbf{Utilizador Final}. Estes perfis refletem, respetivamente, os dois momentos centrais do fluxo de trabalho da aplicação: a fase de \textbf{construção e prototipagem} do \textit{dashboard} (em \textit{Editor Mode}) e a fase de \textbf{análise e recolha de \textit{feedback}} (em \textit{Review Mode}). A separação por perfis permitiu avaliar as funcionalidades e a usabilidade da ferramenta com base em necessidades e objetivos diferentes, aproximando o estudo de um cenário real de utilização.
+
+\subsection{Perfis de Utilizador}
+\label{subsec:cap5_profiles}
+
+A definição dos perfis considerados neste estudo resulta da necessidade de representar os papéis mais comuns no ciclo de conceção e validação de dashboards. No processo de criação de \textit{dashboards}, existe um interveniente responsável pela criação e organização do protótipo, e um utilizador que analisa e valida a proposta apresentada. Desta forma, a inclusão de ambos os perfis permite avaliar se a aplicação é adequada tanto para a fase de prototipagem como para a fase de revisão e recolha de \textit{feedback}.
+
+Desta forma, os perfis definidos foram:
+
+\begin{enumerate}
+    \item \textbf{Designer}: O perfil de \textit{Designer} representa o utilizador responsável pela conceção e construção do protótipo do \textit{dashboard}. Este perfil corresponde tipicamente a profissionais ou estudantes nas áreas de análise de dados, \textit{business intelligence}, engenharia, gestão ou design de informação, que possuam familiaridade com conceitos de visualização de dados e estruturação de dashboards.
+
+    No contexto da aplicação, o \textit{Designer} atua na tradução de requisitos analíticos, necessidades organizacionais ou objetivos de monitorização em soluções visuais estruturadas. Entre as principais tarefas encontram-se a criação e configuração de componentes visuais, a organização hierárquica da informação no \textit{canvas}, e a definição de relações e interações entre elementos. O objetivo central deste perfil consiste em produzir uma representação visual clara, coerente e funcional do \textit{dashboard}, que facilite a interpretação da informação e suporte processos de decisão.
+
+    \item \textbf{Utilizador Final}: O perfil \textit{Utilizador Final} representa o participante que interage com o protótipo com o objetivo de o analisar e fornecer \textit{feedback}. Este perfil desempenha um papel de utilizador operacional do \textit{dashboard} final, podendo incluir gestores, analistas de negócio, técnicos operacionais ou outros profissionais que dependam da informação apresentada para apoiar a tomada de decisão.
+
+    Não se pressupõe que o \textit{Utilizador Final} possua conhecimentos de prototipagem ou modelação visual. Ainda assim, assume-se que dispõe dos conhecimentos mínimos necessários para interpretar um \textit{dashboard} e compreender a informação nele apresentada, de acordo com o seu contexto de utilização. A sua interação ocorre predominantemente no \textit{Review Mode}, onde navega pelo protótipo, interpreta a organização da informação e avalia a clareza, relevância e utilidade dos elementos apresentados. O objetivo deste perfil é contribuir para a melhoria contínua do protótipo, assegurando que este responde às necessidades reais de utilização, facilita a compreensão da informação e apoia eficazmente os processos de decisão.
+\end{enumerate}
+
+\subsection{Tarefas por Perfil}
+\label{subsec:cap5_tasks}
+
+As tarefas atribuídas foram definidas com base nas funcionalidades principais da aplicação e na sequência típica de utilização do sistema, procurando refletir um cenário realista de uso do \textit{Dashboard Designer}. Para isso, as atividades foram organizadas de acordo com os dois modos centrais da ferramenta, distinguindo tarefas de construção em \textit{Editor Mode} e tarefas de análise e \textit{review} em \textit{Review Mode}. Em todos os casos, as tarefas foram apresentadas como objetivos concretos a executar no \textit{canvas}, permitindo observar não só o resultado final, mas também o processo seguido pelo participante, incluindo estratégias de navegação, hesitações e eventuais dificuldades na descoberta de funcionalidades.
+
+Todas as tarefas impostas foram desenhadas com o intuito de cobrir todas as ações essenciais de cada perfil e garantir que os participantes interagiam com componentes e fluxos representativos do sistema. Assim, para além de verificar se cada objetivo foi atingido, foi possível identificar pontos de fricção, como operações que exigem demasiados passos, funcionalidades que não são facilmente localizadas, ou diferenças de comportamento entre \textit{Editor Mode} e \textit{Review Mode} que possam causar confusão.
+
+\subsubsection{Tarefas do Perfil Designer (Editor Mode)}
+\label{subsubsec:cap5_tasks_designer}
+
+As tarefas do perfil de \textit{Designer} foram orientadas para a construção e prototipagem, incidindo sobre operações de criação, organização e ligação de componentes no \textit{Editor Mode}. O foco esteve em avaliar se o participante consegue traduzir uma estrutura de \textit{dashboard} para o \textit{canvas}, utilizando os mecanismos disponibilizados pela ferramenta, e se consegue manter o protótipo organizado à medida que o número de elementos aumenta. De forma geral, as tarefas incluíram:
+
+\begin{enumerate}
+    \item \textbf{Criação de um protótipo base}: inserir um nó \textit{Dashboard} e adicionar componentes relevantes (por exemplo, visualizações, filtros e \textit{placeholders}) através dos mecanismos de criação disponíveis (e.g., \textit{drag-and-drop} e/ou menus contextuais). Esta tarefa permite avaliar a descoberta dos componentes e a compreensão do processo de inserção no \textit{canvas}.
+    \item \textbf{Organização e manipulação de componentes}: reposicionar e redimensionar nós no \textit{canvas}, bem como estruturar elementos de forma hierárquica. Este passo permite observar se a interação direta no \textit{canvas} é clara e se o utilizador consegue manter uma estrutura coerente durante a prototipagem.
+    \item \textbf{Definição de ligações/interações}: criar ligações entre componentes, de forma a representar relações funcionais ou interações no protótipo. Aqui avalia-se a facilidade com que o participante compreende e executa a criação de ligações de navegação e/ou interação no protótipo.
+\end{enumerate}
+
+\subsubsection{Tarefas do Perfil Utilizador Final (Review Mode)}
+\label{subsubsec:cap5_tasks_enduser}
+
+As tarefas do perfil de \textit{Utilizador Final} foram orientadas para análise e recolha de \textit{feedback}, incidindo sobre a navegação no protótipo e a criação e gestão de comentários em \textit{Review Mode}. O objetivo foi avaliar se o participante consegue compreender o protótipo apresentado, localizar os elementos relevantes e registar observações diretamente no contexto do \textit{canvas}, beneficiando dos mecanismos visuais e de navegação disponibilizados. De forma geral, as tarefas incluíram:
+
+\begin{enumerate}
+    \item \textbf{Navegação e inspeção do protótipo}: explorar o \textit{canvas} localizando componentes relevantes e compreender a estrutura do protótipo a ser analisado. Esta tarefa permite observar se o participante consegue orientar-se no grafo e inspecionar áreas específicas sem dificuldade.
+    \item \textbf{Identificação de elementos com \textit{feedback}}: utilizar os indicadores visuais e a listagem no \textit{SideMenu} para reconhecer onde existem comentários registados. Este passo avalia a eficácia dos mecanismos de sinalização e a facilidade de localizar \textit{feedback} existente.
+    \item \textbf{Registo de \textit{feedback} contextualizado}: criar comentários associados a nós e/ou ligações, descrevendo observações, dúvidas ou sugestões diretamente no contexto do elemento analisado. Aqui avalia-se se o fluxo de criação é intuitivo e se o participante compreende claramente a associação entre comentário e elemento.
+    \item \textbf{Gestão do \textit{feedback}}: interagir com comentários existentes (por exemplo, editar, responder e alterar o estado para resolvido quando aplicável), verificando se o ciclo de revisão é suportado pela ferramenta. Esta tarefa permite perceber se as ações sobre comentários são facilmente descobertas e se o estado do \textit{feedback} é compreendido de forma imediata.
+\end{enumerate}
 
 \section{Resultados e Análise}
-\label{sec:resultados_analise}
-% (texto a desenvolver)
+\label{sec:cap5_results}
+
+Nesta secção apresentam-se e discutem-se os resultados obtidos no estudo de avaliação do \textit{Dashboard Designer}, com base nas métricas SUS e NASA-TLX. O objetivo é caracterizar a experiência de utilização da ferramenta, avaliando a usabilidade e a carga de trabalho percebida durante a execução das tarefas impostas a cada perfil de utilizador. 
+
+A avaliação da aplicação baseou-se principalmente em dois questionários: o \textbf{System Usability Scale (SUS)}, utilizado para medir a usabilidade percebida, e o \textbf{NASA Task Load Index (NASA-TLX)}, utilizado para avaliar a carga de trabalho percebida durante a execução das tarefas. No NASA-TLX, a dimensão \textit{Physical Demand} foi omitida, uma vez que se concluiu que não era relevante para o tipo de interação exigida por uma aplicação web centrada em prototipagem e revisão. Para além destas métricas quantitativas, durante as sessões foram também consideradas as dificuldades observadas na interação e o \textit{feedback} fornecido pelos participantes, com o objetivo de identificar pontos de fricção e recolher sugestões concretas para melhoria da interface.
+
+A apresentação dos resultados segue uma estrutura progressiva. Em primeiro lugar, é analisada a visão global dos dados recolhidos, recorrendo a uma visualização que relaciona as pontuações de SUS e NASA-TLX e permite observar a tendência geral entre usabilidade percebida e carga de trabalho percebida de ambos os perfis de utilizador. Em seguida, os resultados são discutidos por métrica, começando pela análise do \textbf{SUS}, com foco na usabilidade percebida e na dispersão das pontuações entre participantes. Posteriormente, é apresentada a análise do \textbf{NASA-TLX}, caracterizando a carga de trabalho percebida e discutindo as dimensões avaliadas. Por fim, é apresentada uma síntese das principais conclusões retiradas a partir da análise conjunta dos resultados, destacando os padrões mais relevantes e os pontos de fricção observados. As respostas completas dos participantes às questões do SUS e do NASA-TLX encontram-se no Apêndice~\ref{app:resultados_questionario}.
+
+\subsection{Visão Global dos Resultados}
+\label{subsec:cap5_results_global}
+
+Antes de realizar a análise detalhada por métrica, é essencial obter uma visão global da relação entre usabilidade e carga de trabalho percebida pelos diferentes utilizadores que fizeram parte do estudo. A Figura~\ref{fig:cap5_sus_tlx_relation} cruza as pontuações de SUS e NASA-TLX obtidas por todos os participantes e inclui a regressão linear entre ambas as métricas, permitindo observar a tendência geral dos dados. Como é possível observar, a visualização apresenta uma regressão linear negativa, indicando que, à medida que a pontuação de SUS aumenta, a pontuação de NASA-TLX tende a diminuir.
+
+Embora não exista uma fórmula universalmente aceite que permita relacionar diretamente os valores de SUS e NASA-TLX, a literatura descreve uma associação negativa entre estas medidas. Melnick et al. analisam esta relação usando SUS como medida de usabilidade percebida e dimensões do NASA-TLX como indicadores de carga de trabalho, concluindo que melhor usabilidade está associada a menor \textit{task load}~\cite{melnick2020perceived}. Assim, é esperado que os sistemas considerados mais usáveis conduzam a menor esforço subjetivo durante a execução das tarefas, o que se reflete numa tendência com declive negativo entre ambas as métricas.
+
+No caso do \textit{Dashboard Designer}, a Figura~\ref{fig:cap5_sus_tlx_relation} mostra uma concentração de resultados numa região compatível com \textbf{SUS elevado} e \textbf{TLX baixo}. Este resultado sugere que a ferramenta foi percecionada como usável e, ao mesmo tempo, pouco exigente em termos de esforço durante a execução das tarefas. Esta leitura global serve de base para a análise detalhada que se segue, na qual os resultados são discutidos separadamente para o SUS e para o NASA-TLX, procurando compreender a consistência das pontuações e as diferenças observadas entre participantes.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{SUS vs TLX}
+    \caption{Relação global entre as pontuações de SUS e NASA-TLX obtidas no estudo, incluindo regressão linear.}
+    \label{fig:cap5_sus_tlx_relation}
+\end{figure}
+
+\subsection{Resultados do SUS}
+\label{subsec:cap5_results_sus}
+
+A usabilidade percebida do \textit{Dashboard Designer} foi avaliada através do questionário \textbf{System Usability Scale (SUS)}. A Figura~\ref{fig:cap5_sus_bars} apresenta as pontuações de SUS obtidas por todos os participantes, sendo a cor utilizada para distinguir o perfil associado a cada resposta. Para além das pontuações individuais, a figura apresenta também a média de SUS por perfil, o que permite observar a consistência das respostas dentro de cada grupo e comparar a perceção de usabilidade entre participantes com objetivos de utilização distintos.
+
+Para clarificar a forma como as pontuações de SUS foram obtidas, é importante descrever todo o processo de conversão das respostas para uma escala padrão de 0--100. O questionário SUS é composto por 10 itens respondidos numa escala de Likert de 5 pontos, e a pontuação final resulta de uma agregação normalizada destas respostas. Neste estudo, cada resposta foi primeiro convertida para um valor numérico de 1 a 5 (de \textit{Discordo Totalmente} a \textit{Concordo Totalmente}). De seguida, aplicou-se o procedimento standard do SUS: para os itens ímpares, foi calculada a contribuição como $(x_i - 1)$, e para os itens pares foi calculada como $(5 - x_i)$, garantindo que, em todos os casos, valores mais elevados representam melhor usabilidade percebida. A soma destas contribuições produz um valor entre 0 e 40, que é posteriormente convertido para a escala 0--100 através da multiplicação por 2.5. Em termos formais, a pontuação é dada por
+\[
+SUS = \left(\sum_{i \in \text{ímpar}}(x_i - 1) + \sum_{i \in \text{par}}(5 - x_i)\right) \times 2.5,
+\]
+o que assegura compatibilidade direta com os referenciais de interpretação do SUS utilizados na literatura, incluindo a escala de aceitação e os qualificativos apresentados por Bangor et al. \cite{bangor2009determining}
+
+De forma global, os resultados evidenciam um nível elevado de usabilidade percebida e uma boa consistência entre participantes. No perfil de \textit{Utilizador Final}, as pontuações oscilam entre \textbf{70} e \textbf{100}, com a maioria dos valores concentrados na faixa superior da escala, o que indica uma avaliação globalmente positiva apesar de existir alguma variabilidade individual. No perfil de \textit{Designer}, observa-se uma dispersão mais reduzida, com pontuações entre \textbf{82.5} e \textbf{90}, sugerindo uma perceção mais homogénea da interface por parte deste grupo. As médias registadas são muito próximas, com \textbf{87.3} para o perfil de \textit{Utilizador Final} e \textbf{87.5} para o perfil de \textit{Designer}, reforçando que, independentemente do perfil e do tipo de tarefas executadas, a ferramenta foi avaliada de forma consistente em termos de usabilidade.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{Barras-SUS}
+    \caption{Pontuações individuais e médias de SUS por participante e perfil.}
+    \label{fig:cap5_sus_bars}
+\end{figure}
+
+Para contextualizar estas pontuações, recorre-se ao referencial proposto por Bangor et al., que relaciona valores de SUS com faixas de aceitação e com uma escala de adjetivos para qualificar a usabilidade percebida~\cite{bangor2009determining}. A Figura~\ref{fig:cap5_sus_adjective_scale} apresenta este enquadramento. De acordo com esta escala, pontuações na gama observada no estudo situam-se tipicamente no intervalo associado a classificações como \textit{Excellent}, aproximando-se da região de \textit{Best Imaginable} para valores mais elevados. Assim, tanto as médias como a maioria das pontuações individuais indicam que o \textit{Dashboard Designer} foi percecionado com um nível de usabilidade \textbf{elevado}, sendo os resultados globalmente compatíveis com uma avaliação \textbf{excelente} da interface.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth]{SUSscale}
+    \caption{Escala de interpretação do SUS~\cite{bangor2009determining}.} 
+    \label{fig:cap5_sus_adjective_scale}
+\end{figure}
+
+\subsection{Resultados do NASA-TLX}
+\label{subsec:cap5_results_tlx}
+
+A carga de trabalho percebida durante a utilização do \textit{Dashboard Designer} foi avaliada através do questionário \textbf{NASA Task Load Index (NASA-TLX)}. A Figura~\ref{fig:cap5_tlx_bars} apresenta as pontuações globais e médias obtidas por todos os participantes, distinguindo os perfis de utilizador através de uma escala de cor. Esta visualização permite observar não só o nível de esforço reportado em cada grupo, mas também a consistência das respostas obtidas na avaliação.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{Barras-TLX}
+    \caption{Pontuações individuais e médias de NASA-TLX por participante e perfil.}
+    \label{fig:cap5_tlx_bars}
+\end{figure}
+
+De forma geral, os resultados indicam uma carga de trabalho reduzida em ambos os perfis. No perfil de \textit{Utilizador Final}, as pontuações oscilam entre \textbf{0} e \textbf{31}, com uma média de \textbf{12.6}. A maioria dos participantes deste perfil apresenta valores muito baixos, concentrados abaixo dos \textbf{10} pontos. No perfil de \textit{Designer}, observa-se igualmente uma carga de trabalho baixa, com valores entre \textbf{4} e \textbf{29} e uma média de \textbf{14.0}. Tal como no perfil de \textit{Utilizador Final}, a distribuição encontra-se concentrada em valores reduzidos, sugerindo que as tarefas de prototipagem e manipulação do \textit{canvas} foram executadas com um nível de esforço subjetivo relativamente baixo.
+
+De forma a enquadrar corretamente os resultados obtidos com o referencial de Grier, é importante justificar a forma como a pontuação global de NASA-TLX foi calculada neste estudo. Ao contrário de muitas implementações do NASA-TLX que recolhem respostas diretamente numa escala contínua de 0--100, neste estudo as dimensões foram respondidas numa escala discreta de 1--10 e posteriormente convertidas para a escala 0--100. Em concreto, a pontuação global foi calculada através da média das dimensões consideradas e da respetiva normalização para 0--100, utilizando a expressão
+\[
+TLX = \left(\frac{\overline{x}-1}{9}\right)\times 100,
+\]
+onde $\overline{x}$ corresponde à média das respostas nas dimensões avaliadas. Adicionalmente, a dimensão \textit{Performance} foi invertida antes de calcular a média, de modo a manter a mesma orientação das restantes dimensões, em que valores mais elevados representam maior carga de trabalho percebida. Por fim, a dimensão \textit{Physical Demand} não foi considerada, uma vez que foi previamente identificada como pouco relevante para o contexto de utilização de uma aplicação web centrada em prototipagem e revisão. Desta forma, as pontuações apresentadas correspondem a uma versão do NASA-TLX normalizada para 0--100, permitindo comparar os resultados com os percentis reportados por Grier~\cite{grier2015high}.
+
+Para justificar os valores obtidos no estudo realizado, iremos recorrer ao referencial apresentado por Grier, que compila resultados globais de NASA-TLX em múltiplos estudos e apresenta uma classificação baseada em percentis. A Figura~\ref{fig:cap5_tlx_percentiles} apresenta os resultados reportados no estudo, permitindo enquadrar as pontuações obtidas nesta avaliação. De acordo com os percentis reportados por Grier, o valor correspondente ao 10.\ percentil é de 26.08. As médias obtidas neste estudo (12.6 para \textit{Utilizador Final} e 14.0 para \textit{Designer}) encontram-se substancialmente abaixo desse limiar. Este enquadramento permite concluir que a carga de trabalho percebida durante a utilização do \textit{Dashboard Designer} foi bastante baixa~\cite{grier2015high}.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth]{TLXscale}
+    \caption{Percentis da análise global do NASA-TLX~\cite{grier2015high}.}
+    \label{fig:cap5_tlx_percentiles}
+\end{figure}
+
+Em síntese, podemos concluir que as médias e a distribuição das pontuações apresentadas na Figura~\ref{fig:cap5_tlx_bars} indicam que a interação com a ferramenta foi percebida como pouco exigente. A consistência dos resultados, sobretudo na concentração de valores baixos em ambos os perfis, sugere que as tarefas propostas foram executadas com baixo esforço subjetivo, sendo este resultado coerente com o objetivo da ferramenta de suportar o processo de prototipagem e revisão de forma fluida.
+
+\subsection{Conclusões}
+\label{subsec:cap5_conclusoes}
