@@ -11,14 +11,42 @@
 \chapter{Conclusão e Trabalho Futuro}
 \label{cha:cap6_conclusao}
 
+Este capítulo encerra a dissertação, sintetizando o trabalho desenvolvido e os principais resultados obtidos. Em primeiro lugar, são apresentadas as contribuições da dissertação, recapitulando o problema abordado, o objetivo central e os aspetos mais relevantes da solução proposta, incluindo contributos técnicos e metodológicos. De seguida, são discutidas as conclusões finais e oportunidades de trabalho futuro, destacando funcionalidades planeadas mas não implementadas, melhorias para a ferramenta e extensões que podem reforçar a sua utilização em cenários reais.
+
 \section{Contribuições}
 \label{sec:cap6_contribuicoes}
-% (texto a desenvolver)
 
-\section{Trabalho Futuro}
+Esta dissertação centrou-se na falta de ferramentas que apoiem de forma direta as fases iniciais de design e prototipagem de \textit{dashboards}, bem como na validação e recolha de \textit{feedback} entre os seus intervenientes. Desta forma, foram desenvolvidas contribuições técnicas e metodológicas que suportam um ciclo de prototipagem iterativo e estruturado. As principais contribuições foram as seguintes:
+
+\begin{enumerate}
+    \item \textbf{Desenvolvimento de um Meta-modelo}: foi definido e implementado um meta-modelo capaz de representar os elementos de um \textit{dashboard} e as relações relevantes entre esses elementos, servindo como base conceptual para estruturar o domínio e orientar a prototipagem. Para além de descrever componentes e interações, este meta-modelo permite organizar a informação necessária ao longo do processo de desenvolvimento do \textit{dashboard}, suportando uma visão mais sistemática do protótipo e facilitando a documentação de decisões de design. 
+ 
+    \item \textbf{Implementação do \textit{Dashboard Designer} como editor visual}: foi desenvolvida uma ferramenta \textit{web-based} que concretiza a tradução do meta-modelo e dos conceitos da linguagem \gls{IVML} para um editor visual, permitindo modelar componentes e relações do \textit{dashboard} através de nós e ligações num \textit{canvas}. A ferramenta integra \textit{Editor Mode} e \textit{Review Mode}, suportando a construção do protótipo e a sua revisão com bloqueio de edição, bem como a recolha e visualização de \textit{feedback} contextualizado no próprio protótipo. Adicionalmente, foram implementados mecanismos de persistência e portabilidade de projetos, permitindo guardar e recuperar protótipos e suportando importação/exportação através do formato \texttt{.dashboard}, o que garante continuidade de trabalho entre sessões e facilita a partilha do protótipo entre intervenientes.
+
+    \item \textbf{Produção de vídeos demonstrativos por perfil}: foram produzidos vídeos dedicados para os dois perfis considerados no estudo, \textit{Designer} e \textit{Utilizador Final}. Os vídeos dirigidos ao perfil de \textit{Designer} focaram-se nas funcionalidades de prototipagem do \textit{Editor Mode}, incluindo criação e organização de componentes no \textit{canvas}, definição de ligações e configuração de propriedades. Os vídeos dirigidos ao perfil de \textit{Utilizador Final} focaram-se nas funcionalidades de revisão do \textit{Review Mode}, incluindo navegação do protótipo, registo de \textit{feedback} contextualizado e consulta/gestão de comentários. Estes vídeos permitiram documentar os fluxos principais da ferramenta e garantir uma introdução consistente às funcionalidades relevantes para cada perfil.
+
+    \item \textbf{Avaliação com utilizadores e conclusões suportadas por resultados}: foi desenhado e executado um estudo de avaliação com perfis distintos e tarefas representativas do fluxo de utilização da ferramenta. A avaliação combinou questionários padronizados (SUS e NASA-TLX) com observações qualitativas recolhidas durante as sessões, permitindo identificar pontos fortes e eventuais problemas na interação. Os resultados obtidos suportam uma avaliação global positiva, com pontuações elevadas de SUS e valores reduzidos de NASA-TLX, indicando boa usabilidade percebida e baixa carga de trabalho durante a execução das tarefas propostas.
+\end{enumerate}
+
+Em conjunto, estas contribuições permitiram responder ao problema identificado e cumprir o objetivo central da dissertação. O meta-modelo definiu a base conceptual do domínio, e a sua concretização no \textit{Dashboard Designer} permitiu transformar esse conhecimento num ambiente de prototipagem visual e iterativo, com suporte explícito à revisão e recolha de \textit{feedback}. Adicionalmente, a produção de vídeos demonstrativos por perfil contribuiu para documentar e comunicar de forma consistente os fluxos principais da ferramenta, facilitando a sua compreensão por diferentes tipos de utilizador. Por fim, o estudo de avaliação forneceu evidência empírica que confirma a usabilidade e eficácia da solução desenvolvida.
+
+\section{Conclusões e Trabalho Futuro}
 \label{sec:cap6_trabalho_futuro}
-% (texto a desenvolver)
 
-\section{Observações Finais}
-\label{sec:cap6_observacoes_finais}
-% (texto a desenvolver)
+Os resultados obtidos nesta dissertação permitem concluir que o \textit{Dashboard Designer} constitui uma solução adequada para apoiar o processo de prototipagem e validação de \textit{dashboards} interativos. A ferramenta demonstrou ser capaz de estruturar protótipos de forma clara e de recolher \textit{feedback} diretamente sobre os elementos do protótipo, promovendo um ciclo de iteração controlado.
+
+Apesar dos resultados alcançados, existem extensões e funcionalidades relevantes que podem tornar a aplicação mais versátil e completa. Em particular, destacam-se os seguintes pontos de trabalho futuro:
+
+\begin{itemize}
+    \item \textbf{Armazenamento centralizado de projetos na cloud}: possibilidade de guardar e recuperar protótipos a partir de um repositório central, facilitando o acesso a partir de diferentes dispositivos e garantindo continuidade entre sessões. Esta abordagem seria útil em contextos de equipa, onde múltiplos protótipos precisam de ser organizados por projeto, partilhados entre intervenientes e recuperados em diferentes fases do ciclo de desenvolvimento.
+
+    \item \textbf{Gestão de utilizadores e projetos}: introdução de autenticação e gestão de permissões, distinguindo explicitamente perfis como \textit{Designer} e \textit{Utilizador Final}. Esta evolução permitiria disponibilizar uma área inicial da aplicação para gestão de projetos, onde o utilizador poderia criar e organizar protótipos, definir permissões de acesso e partilhar projetos com outros intervenientes. Em paralelo, os perfis permitiriam controlar as ações disponíveis no interior de cada projeto, garantindo que \textit{designers} editam o protótipo e que \textit{utilizadores finais} acedem sobretudo ao \textit{Review Mode} para comentar e validar, mantendo registo de autoria e histórico de alterações.
+
+    \item \textbf{Colaboração múltipla no mesmo protótipo}: suporte a edição colaborativa em tempo real, permitindo que vários utilizadores trabalhem simultaneamente sobre o mesmo protótipo. Este cenário é particularmente relevante em sessões colaborativas de \textit{design}, onde diferentes intervenientes podem organizar a estrutura do \textit{dashboard}, configurar propriedades e definir ligações em paralelo, exigindo mecanismos de sincronização e resolução de conflitos para garantir consistência.
+
+    \item \textbf{Simulação do comportamento do protótipo}: reforço das capacidades de simulação, permitindo testar o comportamento esperado do \textit{dashboard} antes da implementação final. Isto incluiria a simulação de filtros e do seu impacto nas visualizações, a navegação entre vistas/páginas e a execução de interações definidas no protótipo, como \textit{highlight}, \textit{drill-down} ou \textit{details-on-demand}. Esta extensão permitiria que a revisão fosse feita com maior fidelidade ao comportamento do sistema final, aumentando a qualidade da validação durante o \textit{Review Mode}.
+\end{itemize}
+
+Em síntese, os pontos identificados representam uma evolução do \textit{Dashboard Designer}, reforçando a sua utilização em contextos colaborativos e aproximando a prototipagem de cenários reais de trabalho em equipa. A integração de backend e armazenamento centralizado aumentaria robustez e continuidade, enquanto a colaboração em tempo real e a simulação de comportamento ampliariam a capacidade da ferramenta para suportar discussão, validação e iteração com maior fidelidade ao produto final.
+
+Por fim, conclui-se que o trabalho desenvolvido cumpre os objetivos propostos na dissertação, ao apresentar uma solução funcional e avaliada que estrutura a prototipagem de \textit{dashboards} e integra a recolha de \textit{feedback} no próprio processo, reduzindo ambiguidades e promovendo iteração mais informada antes da implementação final.
