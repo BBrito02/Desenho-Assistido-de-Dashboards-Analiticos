@@ -46,17 +46,35 @@ Um requisito fundamental do \textit{Dashboard Designer} é permitir que os proje
 
 De forma a permitir que os protótipos possam ser partilhados e reutilizados, o \textit{Dashboard Designer} utiliza um formato próprio de ficheiro com a extensão \textbf{\texttt{.dashboard}}. Este ficheiro corresponde a um \textbf{arquivo comprimido} que reúne, num único ficheiro, toda a informação necessária para voltar a abrir um protótipo. Em particular, inclui um ficheiro \texttt{dashboard.json} com a descrição estrutural do projeto, contendo a lista de nós e arestas, os respetivos metadados, bem como informação de \textbf{layout} do \textit{canvas} (posição e dimensões dos nós) e parâmetros do editor (como a área visível no \textit{canvas} e o nível de \textit{zoom}). Quando existem recursos associados, como imagens de \textit{screenshots}, estes são incluídos no mesmo pacote numa pasta própria (\texttt{images/}), sendo referenciados a partir do \texttt{dashboard.json} por identificadores. Assim, no processo de exportação o sistema armazena a estrutura e os seus recursos num ficheiro único, e no processo de importação executa o inverso, reconstruindo o grafo e restaurando os recursos necessários para que o protótipo possa ser visualizado e editado novamente.
 
-Com a arquitetura do sistema definida, as secções seguintes descrevem as funcionalidades da aplicação em detalhe. A Secção~\ref{sec:cap4_editor_mode} aprofunda o \textit{Modo de Edição}, descrevendo o ambiente de edição, criação/manipulação de nós e o processo de configuração semântica do protótipo. A Secção~\ref{sec:cap4_review_mode} descreve o \textit{Modo de Recolha de Feedback}, dedicado à análise e recolha de \textit{feedback} contextualizado diretamente sobre elementos do \textit{dashboard}, suportando iteração e colaboração dentro da própria ferramenta.
+Com a arquitetura do sistema definida, as secções seguintes descrevem as funcionalidades da aplicação em detalhe. A Secção~\ref{sec:cap4_pagina_inicial} descreve a \textit{Página Inicial}, onde o utilizador pode escolher entre iniciar um novo projeto, carregar um projeto existente ou explorar exemplos de protótipos desenvolvidos. A Secção~\ref{sec:cap4_editor_mode} aprofunda o \textit{Modo de Edição}, descrevendo o ambiente de edição, criação/manipulação de nós e o processo de configuração semântica do protótipo. A Secção~\ref{sec:cap4_review_mode} descreve o \textit{Modo de Recolha de Feedback}, dedicado à análise e recolha de \textit{feedback} contextualizado diretamente sobre elementos do \textit{dashboard}, suportando iteração e colaboração dentro da própria ferramenta.
 
-\section{Home Page}
-\label{sec:cap4_home_page}
+\section{Página Inicial}
+\label{sec:cap4_pagina_inicial}
 
-AQUI VER SE É MESMO NECESSÁRIO CRIAR UM SECÇÃO PARA APRESENTAR A HOME PAGE
+A \textbf{Página Inicial} do \textit{Dashboard Designer} é apresentada ao utilizador assim que a aplicação é aberta. Esta página tem como principal objetivo fornecer uma interface clara e intuitiva, permitindo que o utilizador escolha rapidamente que ação deseja efetuar antes de iniciar o processo de edição ou revisão de um \textit{dashboard}. A página inicial funciona como um ponto de partida, oferecendo diferentes opções que facilitam o fluxo de trabalho do utilizador, ajudando-o a decidir se quer começar um novo projeto, carregar um projeto existente ou explorar exemplos de protótipos já desenvolvidos.
+
+De seguida, são apresentadas as diferentes opções que a página inicial disponibiliza ao utilizador:
+\begin{itemize}
+    \item \textbf{\textit{Blank Project} (Novo Projeto)}: Ao selecionar esta opção, o utilizador inicia um novo projeto em branco. Esta opção é ideal para quem deseja começar do zero, criando um protótipo sem qualquer estrutura ou conteúdo prévio. O \textit{Dashboard Designer} abre uma área de trabalho limpa (\textit{canvas}), pronta para a adição de nós, interações e configurações, permitindo que o utilizador construa o seu \textit{dashboard} a partir de uma base vazia.
+    
+    \item \textbf{\textit{Load Project} (Carregar Projeto)}: Esta opção permite ao utilizador carregar um projeto previamente salvo. Quando o utilizador seleciona esta opção, a aplicação solicita a seleção de um ficheiro \texttt{.dashboard} guardado localmente. Uma vez carregado, o \textit{Dashboard Designer} restaura o projeto, mantendo todos os nós, interações, layouts e dados associados, permitindo ao utilizador retomar o estado do projeto.
+    
+    \item \textbf{\textit{Load Examples} (Carregar Exemplos)}: Esta funcionalidade oferece ao utilizador a opção de explorar exemplos de protótipos de \textit{dashboards} já desenvolvidos. Através desta opção, o utilizador pode visualizar diferentes tipos de protótipos e entender melhor as funcionalidades e possibilidades da ferramenta. Estes exemplos servem como inspiração, permitindo ao utilizador ver como as diferentes interações, visualizações e estruturas podem ser implementadas no \textit{Dashboard Designer}. Os exemplos fornecidos englobam todas as funcionalidades que a plataforma suporta, servindo como uma visão abrangente das capacidades do \textit{Dashboard Designer}.
+\end{itemize}
+
+A interface da página inicial foi projetada para ser simples e objetiva. Esta abordagem oferece uma experiência de uso eficiente e sem complicações. A Figura~\ref{fig:homePage} ilustra a página inicial do \textit{Dashboard Designer}, destacando as opções disponíveis e facilitando a interação do utilizador com a aplicação.
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\textwidth]{homePage}
+    \caption{Página Inicial do \textit{Dashboard Designer}.}
+    \label{fig:homePage}
+\end{figure}
 
 \section{Modo de Edição}
 \label{sec:cap4_editor_mode}
 
-\subsection{Ambiente de Edição e Canvas (AQUI O TEXTO DIZ QUE A IMAGEM APRESENTA O ESTADO INICIAL DA APLICAÇÃO, TENHO DE ALTERAR // ALTERAR TAMBÉM ONDE DESCREVO OS BOTÕES DO CABEÇALHO DO CANVAS)}
+\subsection{Ambiente de Edição e Canvas}
 \label{subsec:cap4_editor_canvas}
 
 O \textit{Modo de Edição} constitui o ambiente principal de trabalho do \textit{Dashboard Designer}, onde o utilizador constrói protótipos através da criação e organização de elementos representados como nós e ligações. A interface foi desenhada para ocupar a totalidade do ecrã, proporcionando uma área ampla de edição e evitando limitações associadas a janelas reduzidas. Esta abordagem é particularmente relevante num editor baseado em grafos, dado que a complexidade e o número de elementos pode aumentar rapidamente ao longo do processo de prototipagem. A Figura~\ref{fig:cap4_initial_interface} apresenta o estado inicial da aplicação, ilustrando a configuração inicial do \textit{canvas} e a disposição dos controlos essenciais para o início do processo de construção do protótipo.
@@ -83,7 +101,7 @@ Para tornar mais evidente o conjunto de controlos disponibilizados no \textit{ca
     \label{fig:cap4_canvas_controls}
 \end{figure}
 
-Para além do \textit{canvas}, a aplicação disponibiliza elementos adicionais na interface que suportam o processo de edição. Em particular, o \textit{SideMenu}, localizado no lado esquerdo da interface, apresenta os componentes disponíveis para construção do protótipo (por exemplo, visualizações, filtros e \textit{placeholders}), permitindo iniciar a criação de nós através de uma abordagem \textit{drag-and-drop}. Adicionalmente, a zona superior do ecrã disponibiliza controlos de produtividade, como \textit{undo/redo} e operações associadas à gestão de projetos, como importar e exportar. Por fim, é disponibilizado um seletor explícito de modo (\textit{Editor}/\textit{Review}) que permite alternar entre edição e revisão, mantendo o \textit{canvas} como elemento central do processo de prototipagem.
+Para além do \textit{canvas}, a aplicação disponibiliza elementos adicionais na interface que suportam o processo de edição. Em particular, o \textit{SideMenu}, localizado no lado esquerdo da interface, apresenta os componentes disponíveis para construção do protótipo (por exemplo, visualizações, filtros e \textit{placeholders}), permitindo iniciar a criação de nós através de uma abordagem \textit{drag-and-drop}. Adicionalmente, a zona superior do ecrã disponibiliza controlos de produtividade, como a opção de retornar para a página inicial, \textit{undo/redo}, e a possibilidade de salvar o protótipo. Por fim, é disponibilizado um seletor explícito de modo (\textit{Editor}/\textit{Review}) que permite alternar entre edição e revisão, mantendo o \textit{canvas} como elemento central do processo de prototipagem.
 
 A Figura~\ref{fig:cap4_editor_layout} apresenta um exemplo do \textit{Dashboard Designer} em \textit{Modo de Edição}, com um protótipo desenvolvido no \textit{canvas}. Esta imagem ilustra a disposição dos principais elementos da interface, como o \textit{SideMenu}, os controlos de navegação e a interação com os componentes, fornecendo uma visão clara do ambiente de trabalho utilizado para a criação e edição do protótipo.
 
@@ -282,7 +300,7 @@ Esta mudança de comportamento é acompanhada por uma adaptação da interface, 
 
 Com o \textit{Review Mode} ativo e as funcionalidades de edição desativadas, o foco da ferramenta passa a ser a recolha de \textit{feedback} de forma direta e contextualizada. O objetivo principal desta funcionalidade é permitir que as observações dos utilizadores sejam registadas no próprio protótipo, associando cada comentário a um elemento concreto do \textit{dashboard} --- um nó ou uma ligação. Esta associação explícita reduz ambiguidades durante a revisão, uma vez que o autor do protótipo consegue identificar qual o componente a que o comentário se refere e em que contexto foi realizado.
 
-O fluxo de recolha de \textit{feedback} é orientado pela seleção no \textit{canvas}. Quando o utilizador seleciona um nó ou uma aresta no \textit{Review Mode}, o menu contextual do elemento (\textit{ComponentsMenu}) deixa de apresentar opções de edição e passa a disponibilizar um formulário de comentário (\textit{ReviewMenu}). Desta forma, o utilizador pode registar \textit{feedback} diretamente sobre o elemento selecionado, ficando a revisão associada ao respetivo nó ou ligação. Esta abordagem evita descrições gerais e ambíguas, sendo particularmente útil em protótipos densos, onde a quantidade de visualizações e ligações torna difícil referenciar componentes de forma inequívoca.
+O fluxo de recolha de \textit{feedback} é orientado pela seleção no \textit{canvas}. Quando o utilizador seleciona um nó ou uma aresta no \textit{Review Mode}, o menu contextual do elemento (\textit{ComponentsMenu}) deixa de apresentar opções de edição e passa a disponibilizar um formulário de comentário (\textit{ReviewMenu}). Neste menu, além das opções de comentário, também é apresentada uma lista de interações associadas ao nó selecionado, caso este possua alguma interação configurada. Esta funcionalidade permite que o utilizador, ao mesmo tempo em que fornece \textit{feedback} sobre um componente, também visualize as interações que estão vinculadas ao nó, facilitando uma revisão mais completa do comportamento e das funcionalidades do protótipo.
 
 O formulário de recolha foi desenhado para captar não apenas texto livre, mas também informações extra que ajudam a estruturar e a priorizar as observações feitas. Em particular, o \textit{ReviewMenu} permite ao utilizador caracterizar cada comentário através de campos como:
 
